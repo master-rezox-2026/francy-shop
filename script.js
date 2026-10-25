@@ -1,6 +1,6 @@
 // --- SUPABASE CONFIGURATION ---
-const SUPABASE_URL = 'https://birbkqzoqqbkhwwoalku.supabase.co';        // ඔබේ Supabase Project URL එක මෙතැනට යොදන්න
-const SUPABASE_ANON_KEY = 'sb_publishable_FAQrsFccE9NdPqcMt55OaQ_kkPLkwZB'; // ඔබේ Supabase Anon Key එක මෙතැනට යොදන්න
+const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';        // ඔබේ Supabase Project URL එක මෙතැනට යොදන්න
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE'; // ඔබේ Supabase Anon Key එක මෙතැනට යොදන්න
 
 let _supabase = null;
 if (SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE' && window.supabase) {
@@ -73,10 +73,11 @@ const DEFAULT_PRODUCTS = [
 let settings = JSON.parse(localStorage.getItem('fc_settings_v2')) || DEFAULT_SETTINGS;
 let products = JSON.parse(localStorage.getItem('fc_products_v2')) || DEFAULT_PRODUCTS;
 let cart = JSON.parse(localStorage.getItem('fc_cart_v2')) || [];
+let currentUser = null;
 
 let currentCategory = "All";
 let currentSearchQuery = "";
-let checkoutSource = null; // 'single' or 'cart'
+let checkoutSource = null;
 let singleCheckoutProduct = null;
 
 // INITIALIZE APP
@@ -85,6 +86,12 @@ window.onload = async function() {
     renderCategories();
 
     if (_supabase) {
+        // Check active session
+        const { data: { session } } = await _supabase.auth.getSession();
+        if (session && session.user) {
+            currentUser = session.user;
+            updateAdminUIState(true);
+        }
         await fetchProductsFromSupabase();
     } else {
         renderProducts();
@@ -206,7 +213,6 @@ function renderProducts() {
     grid.innerHTML = filtered.map(p => `
         <div class="bg-white rounded-3xl border border-slate-100 product-card overflow-hidden flex flex-col justify-between">
             <div>
-                <!-- Image Container with Code Badge -->
                 <div class="relative bg-slate-50 h-56 sm:h-60 flex items-center justify-center p-4">
                     <span class="absolute top-3 left-3 bg-slate-900/90 text-amber-400 text-[11px] font-mono font-black px-2.5 py-1 rounded-lg shadow-sm border border-slate-700">
                         ${p.code}
@@ -214,7 +220,6 @@ function renderProducts() {
                     <img src="${p.image}" alt="${p.title}" class="max-h-full max-w-full object-contain" onerror="this.src='https://placehold.co/400x400/f1f5f9/94a3b8?text=Image'">
                 </div>
 
-                <!-- Details -->
                 <div class="p-5 space-y-2">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2 py-0.5 rounded">${p.category}</span>
                     <h4 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-1">${p.title}</h4>
@@ -227,7 +232,6 @@ function renderProducts() {
                 </div>
             </div>
 
-            <!-- Action Buttons -->
             <div class="p-5 pt-0 grid grid-cols-2 gap-2">
                 <button onclick="addToCart('${p.id}')" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1">
                     <i class="fa-solid fa-cart-plus"></i> කාට් එකට
@@ -407,7 +411,15 @@ function processWhatsAppOrder(e) {
     window.open(whatsappUrl, '_blank');
 }
 
-// ADMIN PANEL FUNCTIONS
+// SECURE SUPABASE ADMIN AUTHENTICATION (EMAIL & PASSWORD)
+function handleAdminHeaderBtn() {
+    if (currentUser) {
+        showAdminPortal();
+    } else {
+        openAdminLoginModal();
+    }
+}
+
 function openAdminLoginModal() {
     document.getElementById('admin-login-modal').classList.remove('hidden');
 }
@@ -416,20 +428,78 @@ function closeAdminLoginModal() {
     document.getElementById('admin-login-modal').classList.add('hidden');
 }
 
-function verifyAdminPin(e) {
+async function verifyAdminAuth(e) {
     e.preventDefault();
-    const pin = document.getElementById('admin-pin-input').value;
-    if (pin === "1289") {
-        closeAdminLoginModal();
-        document.getElementById('admin-pin-input').value = "";
-        showAdminPortal();
-        showToast("ඇඩ්මින් පැනලයට සාර්ථකව පිවිසුනා!");
+    const email = document.getElementById('admin-email-input').value.trim();
+    const password = document.getElementById('admin-password-input').value;
+    const btn = document.getElementById('admin-login-submit-btn');
+
+    btn.innerText = "Verifying...";
+    btn.disabled = true;
+
+    if (_supabase) {
+        try {
+            const { data, error } = await _supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) throw error;
+
+            currentUser = data.user;
+            closeAdminLoginModal();
+            updateAdminUIState(true);
+            showAdminPortal();
+            showToast("ඇඩ්මින් ලෙස සාර්ථකව පිවිසුනා!");
+        } catch (err) {
+            showToast("Login අසාර්ථකයි: " + err.message);
+        } finally {
+            btn.innerText = "Login";
+            btn.disabled = false;
+        }
     } else {
-        showToast("වැරදි ඇඩ්මින් PIN එකක්!");
+        // Fallback for offline local dev mode if Supabase keys not set yet
+        if (email === "admin@francy.com" && password === "admin1289") {
+            currentUser = { email: email };
+            closeAdminLoginModal();
+            updateAdminUIState(true);
+            showAdminPortal();
+            showToast("Local Admin ලෙස පිවිසුනා!");
+        } else {
+            showToast("වැරදි Email හෝ Password එකකි!");
+        }
+        btn.innerText = "Login";
+        btn.disabled = false;
+    }
+}
+
+async function logoutAdmin() {
+    if (_supabase) {
+        await _supabase.auth.signOut();
+    }
+    currentUser = null;
+    updateAdminUIState(false);
+    closeAdminPortal();
+    showToast("Admin Logout විය!");
+}
+
+function updateAdminUIState(isLoggedIn) {
+    const btnText = document.getElementById('admin-btn-text');
+    const emailDisplay = document.getElementById('admin-email-display');
+
+    if (isLoggedIn && currentUser) {
+        btnText.innerText = "ඇඩ්මින් Dashboard";
+        if (emailDisplay) emailDisplay.innerText = `Logged as: ${currentUser.email}`;
+    } else {
+        btnText.innerText = "ඇඩ්මින් ලොගින්";
     }
 }
 
 function showAdminPortal() {
+    if (!currentUser) {
+        openAdminLoginModal();
+        return;
+    }
     document.getElementById('storefront-view').classList.add('hidden');
     document.getElementById('admin-view').classList.remove('hidden');
     renderAdminTable();
@@ -510,6 +580,11 @@ function openEditProduct(productId) {
 async function saveProductFromAdmin(e) {
     e.preventDefault();
 
+    if (!currentUser) {
+        showToast("කරුණාකර ප්‍රථමයෙන් ඇඩ්මින් ලෙස ලොග් වන්න!");
+        return;
+    }
+
     const editId = document.getElementById('admin-edit-id').value;
     const code = document.getElementById('admin-prod-code').value.trim();
     const title = document.getElementById('admin-prod-title').value.trim();
@@ -558,6 +633,11 @@ async function saveProductFromAdmin(e) {
 }
 
 async function deleteProduct(productId) {
+    if (!currentUser) {
+        showToast("කරුණාකර ප්‍රථමයෙන් ඇඩ්මින් ලෙස ලොග් වන්න!");
+        return;
+    }
+
     if (confirm("ඔබට මෙම භාණ්ඩය ඉවත් කිරීමට අවශ්‍යද?")) {
         if (_supabase) {
             try {
