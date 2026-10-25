@@ -41,3 +41,39 @@ body {
 .pulse-badge {
     animation: subtle-pulse 2s infinite;
 }
+
+/* 1. Custom Sinhala Font එක Define කිරීම */
+@font-face {
+    font-family: 'SinhalaSangamMN';
+    src: url('fonts/SinhalaSangamMN.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* 2. Default Font (English සඳහා Standard Font එකක්) */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+/* 3. සිංහල භාෂාව සක්‍රීය වූ විට සිංහල ෆොන්ට් එක Apply කිරීම */
+:lang(si), .lang-si {
+    font-family: 'SinhalaSangamMN', 'Inter', sans-serif !important;
+}
+
+/* Language Switcher Button Styling */
+.lang-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+    background-color: #f1f5f9;
+}
