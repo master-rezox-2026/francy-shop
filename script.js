@@ -1,6 +1,6 @@
 // --- SUPABASE CONFIGURATION ---
-const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';        // ඔබේ Supabase Project URL එක මෙතැනට යොදන්න
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE'; // ඔබේ Supabase Anon Key එක මෙතැනට යොදන්න
+const SUPABASE_URL = 'https://birbkqzoqqbkhwwoalku.supabase.co';        // ඔබේ Supabase Project URL එක මෙතැනට යොදන්න
+const SUPABASE_ANON_KEY = 'sb_publishable_FAQrsFccE9NdPqcMt55OaQ_kkPLkwZB'; // ඔබේ Supabase Anon Key එක මෙතැනට යොදන්න
 
 let _supabase = null;
 if (SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE' && window.supabase) {
