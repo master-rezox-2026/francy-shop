@@ -240,7 +240,7 @@
                         <table class="w-full text-left text-xs sm:text-sm text-slate-600">
                             <thead class="bg-slate-100 text-slate-700 uppercase text-[11px] font-bold">
                                 <tr>
-                                    <th class="py-3 px-4">ඡායාරූපය</th>
+                                    <th class="py-3 px-4">ඡායාරූප</th>
                                     <th class="py-3 px-4">කේතය (Code)</th>
                                     <th class="py-3 px-4">භාණ්ඩයේ නම</th>
                                     <th class="py-3 px-4">වර්ගය</th>
@@ -291,9 +291,31 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">ඡායාරූප සබැඳිය (Image URL) *</label>
-                            <input type="url" id="admin-prod-img" required placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 text-xs sm:text-sm">
+                        <!-- MULTI-IMAGE UPLOAD & URL SECTION -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                            <label class="block text-xs font-bold text-slate-800">ඡායාරූප (Multiple Product Images) *</label>
+                            
+                            <!-- File Upload Option -->
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-600 mb-1"><i class="fa-solid fa-cloud-arrow-up text-rose-500 mr-1"></i> Computer/Phone එකෙන් Photo Upload කරන්න (Multiple)</label>
+                                <input type="file" id="admin-prod-file-input" multiple accept="image/*" onchange="handleImageFileUpload(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-rose-50 file:text-rose-600 hover:file:bg-rose-100">
+                            </div>
+
+                            <p class="text-center text-[10px] text-slate-400 uppercase font-bold tracking-wider">නැතහොත් (OR)</p>
+
+                            <!-- Image URL Links Input (Comma separated) -->
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-600 mb-1"><i class="fa-solid fa-link text-slate-500 mr-1"></i> Image URLs ඇතුලත් කරන්න (කමා වලින් වෙන් කර - Comma Separated)</label>
+                                <textarea id="admin-prod-img-urls" rows="2" placeholder="https://image1.jpg, https://image2.jpg" oninput="updateImagePreviewFromInput()" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-mono"></textarea>
+                            </div>
+
+                            <!-- Preview Gallery -->
+                            <div>
+                                <p class="text-[11px] font-bold text-slate-700 mb-2">ඡායාරූප පෙරදසුන (Image Previews):</p>
+                                <div id="admin-image-preview-gallery" class="flex flex-wrap gap-2 min-h-[50px] items-center p-2 bg-white rounded-xl border border-slate-200">
+                                    <span class="text-xs text-slate-400 italic">කිසිදු Image එකක් තෝරා නැත.</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div>
@@ -302,7 +324,7 @@
                         </div>
 
                         <div class="flex gap-3 pt-2">
-                            <button type="submit" class="px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all">
+                            <button type="submit" id="admin-save-prod-btn" class="px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all">
                                 <i class="fa-solid fa-floppy-disk mr-1"></i> සුරකින්න (Save Product)
                             </button>
                             <button type="button" onclick="switchAdminTab('products')" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm rounded-xl">
@@ -396,6 +418,50 @@
 
     <!-- MODALS & DRAWERS -->
 
+    <!-- PRODUCT DETAIL MULTI-IMAGE MODAL -->
+    <div id="product-detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto space-y-4">
+            <button onclick="closeProductDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Main Image Preview & Thumbnails -->
+                <div class="space-y-3">
+                    <div class="h-64 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex items-center justify-center p-2">
+                        <img id="detail-main-img" src="" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div id="detail-thumbnails" class="flex gap-2 overflow-x-auto pb-1"></div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="flex flex-col justify-between space-y-3">
+                    <div>
+                        <span id="detail-code" class="text-xs font-mono font-bold bg-slate-900 text-amber-400 px-2.5 py-1 rounded-md"></span>
+                        <h3 id="detail-title" class="text-lg font-extrabold text-slate-900 mt-2"></h3>
+                        <p id="detail-category" class="text-xs font-bold text-rose-600 mt-1"></p>
+                        <p id="detail-desc" class="text-xs text-slate-500 mt-3 leading-relaxed"></p>
+                    </div>
+
+                    <div class="space-y-3 pt-3 border-t border-slate-100">
+                        <div class="flex items-baseline space-x-2">
+                            <span id="detail-price" class="text-xl font-black text-rose-600"></span>
+                            <span id="detail-oldprice" class="text-xs text-slate-400 line-through"></span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="detail-cart-btn" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-cart-plus"></i> කාට් එකට
+                            </button>
+                            <button id="detail-buy-btn" class="py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1 shadow-md">
+                                <i class="fa-brands fa-whatsapp"></i> මිලදී ගන්න
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 1. CART DRAWER -->
     <div id="cart-drawer-overlay" onclick="toggleCartDrawer()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden"></div>
     <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
@@ -477,7 +543,7 @@
         </div>
     </div>
 
-    <!-- 3. SUPABASE SECURE ADMIN LOGIN MODAL (EMAIL & PASSWORD) -->
+    <!-- 3. SUPABASE SECURE ADMIN LOGIN MODAL (EMAIL & PASSWORD + PASSCODE FALLBACK) -->
     <div id="admin-login-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mx-auto">
@@ -485,18 +551,20 @@
             </div>
             <div>
                 <h3 class="text-lg font-bold text-slate-900">ඇඩ්මින් ලොගින් පැනලය</h3>
-                <p class="text-xs text-slate-500">ඔබගේ Supabase Admin Email සහ Password ලබාදී ඇතුළු වන්න</p>
+                <p class="text-xs text-slate-500">ඔබගේ Admin Email & Password ඇතුලත් කරන්න</p>
             </div>
 
             <form onsubmit="verifyAdminAuth(event)" class="space-y-3 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Admin Email *</label>
-                    <input type="email" id="admin-email-input" required placeholder="admin@example.com" class="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500">
+                    <input type="email" id="admin-email-input" required placeholder="supercellofsl4@gmail.com" class="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Admin Password *</label>
                     <input type="password" id="admin-password-input" required placeholder="••••••••" class="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500">
                 </div>
+
+                <p id="login-error-msg" class="text-xs font-bold text-rose-600 hidden text-center bg-rose-50 p-2 rounded-lg border border-rose-200"></p>
 
                 <div class="flex gap-2 pt-2">
                     <button type="button" onclick="closeAdminLoginModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">අවලංගු කරන්න</button>
