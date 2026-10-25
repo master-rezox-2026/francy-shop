@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site settings self-test</title>
+<style>
+ body{font-family:system-ui,sans-serif;max-width:760px;margin:24px auto;padding:0 16px;color:#0f172a}
+ h1{font-size:18px} .t{border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px}
+ .ok{border-color:#10b981;background:#ecfdf5}.bad{border-color:#ef4444;background:#fef2f2}.warn{border-color:#f59e0b;background:#fffbeb}
+ code{word-break:break-all} img{max-width:120px;max-height:120px;border:1px solid #cbd5e1;border-radius:8px;margin-top:6px;background:#f8fafc}
+</style></head><body>
+<h1>Site settings self-test</h1>
+<p style="font-size:12px;color:#64748b">මෙම පිටුවේ screenshot එක (සම්පූර්ණ) මට එවන්න. ඒකෙන් හරියටම ගැටළුව කොතනදැයි දැනගත හැක.</p>
+<div id="out"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+var out=document.getElementById('out');
+function row(cls,title,body){var d=document.createElement('div');d.className='t '+cls;d.innerHTML='<b>'+title+'</b><br>'+(body||'');out.appendChild(d);return d;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+var C=window.TL_CONFIG||{};
+var keyKind=/^sb_publishable_/.test(C.SUPABASE_ANON_KEY||'')?'new publishable key (sb_publishable_…)':(/^eyJ/.test(C.SUPABASE_ANON_KEY||'')?'legacy anon JWT':'unknown');
+row('', '0. Config', 'URL: <code>'+esc(C.SUPABASE_URL)+'</code><br>Key type: '+keyKind);
+
+// 1. which site-settings.js is deployed?
+fetch('site-settings.js',{cache:'no-store'}).then(function(r){return r.text().then(function(t){
+  var v=/TL_SS_VERSION/.test(t);
+  row(v?'ok':'bad','1. Deployed site-settings.js', v?'NEW version (v2) is live ✔':'OLD version is live ✘ – Netlify has not published the new file yet (check Deploys tab).');
+});}).catch(function(e){row('bad','1. Deployed site-settings.js',esc(e));});
+
+// 2. supabase-js read
+var c=supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,storageKey:'tl-test-anon'}});
+c.from('site_settings').select('key,value').then(function(r){
+  if(r.error){row('bad','2. Read via supabase-js (like the shop)','Error: '+esc(r.error.message));return;}
+  var n=r.data.length; var logo=(r.data.filter(function(x){return x.key==='logo_url';})[0]||{}).value;
+  row(n?'ok':'warn','2. Read via supabase-js (like the shop)', n+' row(s): '+esc(r.data.map(function(x){return x.key;}).join(', '))+
+    (n?'':'<br>0 rows → Login නොවූ අයට කියවීමේ policy නැත, හෝ table හිස්.'));
+  if(logo){var d=row('','3. logo_url value','<code>'+esc(logo)+'</code><br>');var im=new Image();im.onload=function(){d.className='t ok';d.innerHTML+='Image loads ✔ ('+im.naturalWidth+'×'+im.naturalHeight+')<br>';d.appendChild(im);};im.onerror=function(){d.className='t bad';d.innerHTML+='Image FAILED to load ✘ (bucket public නොවේ / URL වැරදියි)';};im.src=logo;}
+  else row('warn','3. logo_url value','No logo_url row visible to the public.');
+});
+
+// 4. raw REST with Bearer (old way) vs apikey only
+function rest(label,headers){
+  fetch(C.SUPABASE_URL+'/rest/v1/site_settings?select=key',{headers:headers,cache:'no-store'}).then(function(r){return r.text().then(function(t){
+    row(r.ok?'ok':'bad',label,'HTTP '+r.status+'<br><code>'+esc(t.slice(0,200))+'</code>');});}).catch(function(e){row('bad',label,esc(e));});
+}
+rest('4a. REST with apikey only',{apikey:C.SUPABASE_ANON_KEY});
+rest('4b. REST with apikey + Authorization Bearer (OLD way)',{apikey:C.SUPABASE_ANON_KEY,Authorization:'Bearer '+C.SUPABASE_ANON_KEY});
+</script></body></html>

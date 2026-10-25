@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Francy China Item Online Shop Admin Panel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body { font-family: 'Inter','Noto Sans Sinhala','Noto Sans Tamil',sans-serif; background:#f0f4f9; }
+  .inp { width:100%; padding:.6rem .8rem; font-size:.8125rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:.75rem; outline:none; }
+  .inp:focus { background:#fff; border-color:#059669; box-shadow:0 0 0 3px rgba(5,150,105,.18); }
+  .pill-on { background:#0f172a; color:#fff; border:1px solid #0f172a; }
+  .pill-off { background:#fff; color:#334155; border:1px solid #e2e8f0; }
+  .pill-off:hover { background:#f1f5f9; }
+  .sw { appearance:none; width:2.5rem; height:1.4rem; background:#cbd5e1; border-radius:999px; position:relative; cursor:pointer; transition:background .15s; flex-shrink:0; }
+  .sw::after { content:''; position:absolute; top:.15rem; left:.15rem; width:1.1rem; height:1.1rem; background:#fff; border-radius:50%; transition:transform .15s; }
+  .sw:checked { background:#059669; }
+  .sw:checked::after { transform:translateX(1.1rem); }
+  @media (prefers-reduced-motion: reduce) { .sw, .sw::after { transition:none; } }
+</style>
+</head>
+<body class="text-slate-800 min-h-screen">
+
+<div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm space-y-2 pointer-events-none"></div>
+
+<!-- LOGIN -->
+<section id="loginView" class="min-h-screen flex items-center justify-center p-4 hidden">
+  <form id="loginForm" class="bg-white w-full max-w-sm rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+    <div>
+      <h1 class="text-lg font-bold text-slate-900">Francy China Item Online Shop Admin</h1>
+      <p class="text-xs text-slate-500 mt-1">Sign in with your admin account.</p>
+    </div>
+    <p id="loginMsg" class="hidden text-xs rounded-xl p-2.5 border bg-red-50 text-red-700 border-red-200"></p>
+    <div>
+      <label class="block text-xs font-semibold mb-1" for="lEmail">Email</label>
+      <input id="lEmail" type="email" required class="inp" autocomplete="username">
+    </div>
+    <div>
+      <label class="block text-xs font-semibold mb-1" for="lPass">Password</label>
+      <input id="lPass" type="password" required class="inp" autocomplete="current-password">
+    </div>
+    <button class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm py-2.5 rounded-xl">Sign in</button>
+  </form>
+</section>
+
+<!-- APP -->
+<section id="appView" class="hidden">
+  <header class="bg-slate-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center gap-3">
+      <div class="mr-auto flex items-center gap-2 font-bold">
+        <i class="fa-solid fa-user-gear text-emerald-400"></i> Francy China Item Online Shop Admin
+      </div>
+      <span id="who" class="hidden sm:inline text-xs text-slate-300"></span>
+      <a href="index.html" target="_blank" rel="noopener" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Site</a>
+      <button id="refreshBtn" type="button" class="text-xs bg-slate-800 hover:bg-slate-700 w-9 h-9 rounded-lg" title="Refresh"><i class="fa-solid fa-rotate"></i></button>
+      <button id="logoutBtn" type="button" class="text-xs font-bold bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg">Logout</button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-5">
+    <!-- Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center"><i class="fa-solid fa-hourglass-half"></i></div><div><div id="stPending" class="text-xl font-extrabold">0</div><div class="text-[11px] text-slate-500">Pending (අනුමැතිය බලාපොරොත්තුවෙන්)</div></div></div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-circle-check"></i></div><div><div id="stApproved" class="text-xl font-extrabold">0</div><div class="text-[11px] text-slate-500">Approved (සජීවී)</div></div></div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-red-100 text-red-700 flex items-center justify-center"><i class="fa-solid fa-circle-xmark"></i></div><div><div id="stRejected" class="text-xl font-extrabold">0</div><div class="text-[11px] text-slate-500">Rejected</div></div></div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center"><i class="fa-solid fa-users"></i></div><div><div id="stUsers" class="text-xl font-extrabold">0</div><div class="text-[11px] text-slate-500">Users</div></div></div>
+    </div>
+
+    <!-- Tabs + search -->
+    <div class="flex flex-wrap items-center gap-2">
+      <div id="tabs" class="flex flex-wrap gap-2"></div>
+      <input id="search" type="search" placeholder="සොයන්න (නම, නගරය, email...)" class="inp sm:ml-auto sm:max-w-xs">
+    </div>
+
+    <!-- Ads / Users list -->
+    <div id="listBox" class="space-y-3"></div>
+
+    <!-- Settings -->
+    <div id="settingsBox" class="hidden space-y-4">
+      <div class="flex flex-wrap items-center gap-2">
+        <div id="sTabs" class="flex flex-wrap gap-2 mr-auto"></div>
+        <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-xl p-1" role="group" aria-label="Editing language">
+          <button type="button" data-lang="en" class="langBtn px-3 py-1.5 rounded-lg text-xs font-semibold">English</button>
+          <button type="button" data-lang="si" class="langBtn px-3 py-1.5 rounded-lg text-xs font-semibold">සිංහල</button>
+          <button type="button" data-lang="ta" class="langBtn px-3 py-1.5 rounded-lg text-xs font-semibold">தமிழ்</button>
+        </div>
+        <button id="saveBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold px-5 py-2 rounded-xl">Save changes</button>
+      </div>
+      <p id="langNote" class="text-[11px] text-slate-500"></p>
+      <div id="sPanel" class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-5"></div>
+    </div>
+  </main>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+const CFG = window.TL_CONFIG || {};
+const sb = supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => Number(n || 0).toLocaleString();
+const fmt = d => d ? new Date(d).toLocaleDateString('en-GB') : '';
+const safeImg = u => /^https?:\/\//i.test(u || '') ? u : '';
+
+function toast(msg, err) {
+  const el = document.createElement('div');
+  el.className = 'pointer-events-auto text-xs font-semibold px-4 py-3 rounded-xl shadow-lg ' + (err ? 'bg-red-600 text-white' : 'bg-slate-900 text-white');
+  el.textContent = msg;
+  $('toast').appendChild(el);
+  setTimeout(() => el.remove(), err ? 7000 : 3000);
+}
+
+/* =================== State =================== */
+let ads = [], profiles = [];
+let tab = 'PENDING';          // PENDING | APPROVED | REJECTED | USERS | SETTINGS
+let query = '';
+
+const TAB_DEFS = [
+  { id: 'PENDING',  label: 'Pending' },
+  { id: 'APPROVED', label: 'Approved' },
+  { id: 'REJECTED', label: 'Rejected' },
+  { id: 'USERS',    label: 'Users' },
+  { id: 'SETTINGS', label: 'Site Settings', icon: 'fa-gear' }
+];
+
+/* =================== Auth =================== */
+function loginMsg(m) { const el = $('loginMsg'); el.textContent = m; el.classList.toggle('hidden', !m); }
+
+async function boot() {
+  const { data } = await sb.auth.getSession();
+  if (data.session) await enter(data.session.user);
+  else $('loginView').classList.remove('hidden');
+}
+
+async function enter(user) {
+  const { data: ok, error } = await sb.rpc('is_site_admin');
+  if (error || !ok) {
+    await sb.auth.signOut();
+    $('appView').classList.add('hidden'); $('loginView').classList.remove('hidden');
+    return loginMsg(error ? 'Run site-settings.sql and admin-policies.sql in Supabase first.' : 'This account is not an admin. Add its email to is_site_admin() in the SQL.');
+  }
+  $('who').textContent = user.email;
+  $('loginView').classList.add('hidden'); $('appView').classList.remove('hidden');
+  await loadAll();
+}
+
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault(); loginMsg('');
+  const { data, error } = await sb.auth.signInWithPassword({ email: $('lEmail').value.trim(), password: $('lPass').value });
+  if (error) return loginMsg(error.message);
+  await enter(data.user);
+});
+$('logoutBtn').addEventListener('click', async () => { await sb.auth.signOut(); location.reload(); });
+$('refreshBtn').addEventListener('click', () => loadAll(true));
+
+/* =================== Data =================== */
+async function loadAll(showToast) {
+  const [a, p, s] = await Promise.all([
+    sb.from('ads').select('*').order('created_at', { ascending: false }),
+    sb.from('profiles').select('*'),
+    sb.from('site_settings').select('key,value')
+  ]);
+  if (a.error) toast('Could not load ads: ' + a.error.message + ' (run admin-policies.sql)', true);
+  if (p.error) toast('Could not load users: ' + p.error.message + ' (run admin-policies.sql)', true);
+  if (s.error) toast('Could not load settings: ' + s.error.message, true);
+  ads = a.data || []; profiles = p.data || [];
+  S = {}; (s.data || []).forEach(r => S[r.key] = r.value);
+  renderAll();
+  if (showToast) toast('Refreshed');
+}
+
+/* =================== Rendering: tabs / stats =================== */
+const count = st => ads.filter(a => a.status === st).length;
+
+function renderAll() {
+  $('stPending').textContent = count('PENDING');
+  $('stApproved').textContent = count('APPROVED');
+  $('stRejected').textContent = count('REJECTED');
+  $('stUsers').textContent = profiles.length;
+  renderTabs();
+  const isSettings = tab === 'SETTINGS';
+  $('settingsBox').classList.toggle('hidden', !isSettings);
+  $('listBox').classList.toggle('hidden', isSettings);
+  $('search').classList.toggle('hidden', isSettings);
+  if (isSettings) renderSettings(); else renderList();
+}
+
+function renderTabs() {
+  $('tabs').innerHTML = TAB_DEFS.map(t => {
+    const n = ['PENDING', 'APPROVED', 'REJECTED'].includes(t.id) ? ` <span class="font-normal opacity-70">(${count(t.id)})</span>` : '';
+    return `<button type="button" data-tab="${t.id}" class="px-4 py-2 rounded-xl text-xs font-bold ${t.id === tab ? 'pill-on' : 'pill-off'}">${t.icon ? `<i class="fa-solid ${t.icon} mr-1"></i>` : ''}${esc(t.label)}${n}</button>`;
+  }).join('');
+}
+$('tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return;
+  tab = b.dataset.tab; renderAll();
+});
+$('search').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderList(); });
+
+/* =================== Ads list =================== */
+function statusBadge(s) {
+  const c = { APPROVED: 'bg-emerald-100 text-emerald-700', PENDING: 'bg-amber-100 text-amber-700', REJECTED: 'bg-red-100 text-red-700' }[s] || 'bg-slate-100 text-slate-600';
+  return `<span class="${c} font-bold px-2.5 py-1 rounded-full text-[10px] uppercase">${esc(s)}</span>`;
+}
+
+function renderList() {
+  const box = $('listBox');
+  if (tab === 'USERS') return renderUsers();
+
+  let rows = ads.filter(a => a.status === tab);
+  if (query) rows = rows.filter(a => [a.title, a.location, a.seller_name, a.whatsapp, a.description].some(v => String(v || '').toLowerCase().includes(query)));
+  if (!rows.length) { box.innerHTML = '<div class="bg-white border border-slate-200 rounded-2xl p-10 text-center text-xs text-slate-400">මෙහි කිසිවක් නොමැත.</div>'; return; }
+
+  box.innerHTML = rows.map(a => {
+    const imgs = (a.images && a.images.length ? a.images : [a.image_url]).filter(Boolean);
+    const btn = (act, label, cls, icon) => `<button type="button" data-act="${act}" data-id="${esc(a.id)}" class="px-3 py-1.5 rounded-lg font-semibold text-xs ${cls}"><i class="fa-solid ${icon} mr-1"></i>${label}</button>`;
+    const actions = [
+      a.status !== 'APPROVED' ? btn('APPROVED', 'Approve', 'bg-emerald-600 hover:bg-emerald-700 text-white', 'fa-check') : '',
+      a.status !== 'REJECTED' ? btn('REJECTED', a.status === 'APPROVED' ? 'Unpublish' : 'Reject', 'bg-amber-100 hover:bg-amber-200 text-amber-800', 'fa-ban') : '',
+      btn('DELETE', 'Delete', 'bg-red-50 hover:bg-red-100 text-red-600', 'fa-trash-can')
+    ].join('');
+    return `
+    <article class="bg-white border border-slate-200 rounded-2xl p-3 sm:p-4 flex gap-3 sm:gap-4">
+      <div class="flex-shrink-0 w-24 sm:w-28 space-y-1.5">
+        ${safeImg(imgs[0]) ? `<a href="${esc(safeImg(imgs[0]))}" target="_blank" rel="noopener"><img src="${esc(safeImg(imgs[0]))}" alt="" class="w-full aspect-square rounded-xl object-cover bg-slate-100"></a>` : '<div class="w-full aspect-square rounded-xl bg-slate-100"></div>'}
+        ${imgs.length > 1 ? `<p class="text-[10px] text-slate-400 text-center"><i class="fa-regular fa-images mr-1"></i>${imgs.length} photos</p>` : ''}
+      </div>
+      <div class="min-w-0 flex-1 text-xs space-y-1.5">
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="font-bold text-sm text-slate-900 break-words">${esc(a.title)}</h3>${statusBadge(a.status)}
+        </div>
+        <p class="text-emerald-700 font-bold">Rs. ${money(a.price)}
+          <span class="text-slate-400 font-normal">• ${esc(a.category)} • ${esc(a.item_condition)} • ${esc(a.location)} • ${esc(fmt(a.created_at))}</span></p>
+        <p class="text-slate-500"><i class="fa-solid fa-user mr-1"></i>${esc(a.seller_name || '-')} &nbsp; <i class="fa-brands fa-whatsapp mr-1 text-emerald-600"></i>${esc(a.whatsapp)}</p>
+        <p class="text-slate-600 whitespace-pre-line break-words line-clamp-3">${esc(a.description)}</p>
+        <div class="flex flex-wrap gap-2 pt-1">${actions}</div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+$('listBox').addEventListener('click', async e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const id = b.dataset.id, act = b.dataset.act;
+  const ad = ads.find(x => x.id === id); if (!ad) return;
+  b.disabled = true; b.classList.add('opacity-60');
+  try {
+    if (act === 'DELETE') {
+      if (!confirm('මෙම ඇඩ් එක සදහටම මකන්නද?')) return;
+      const { data, error } = await sb.from('ads').delete().eq('id', id).select('id');
+      if (error) throw error;
+      if (!data || !data.length) throw new Error('Blocked by security rules. Run admin-policies.sql.');
+      const list = (ad.images && ad.images.length ? ad.images : [ad.image_url]).filter(Boolean);
+      for (const u of list) {
+        const m = '/ad-images/';
+        if (u.includes(m)) await sb.storage.from('ad-images').remove([decodeURIComponent(u.split(m)[1])]);
+      }
+      ads = ads.filter(x => x.id !== id);
+      toast('Deleted');
+    } else {
+      const { data, error } = await sb.from('ads').update({ status: act }).eq('id', id).select('id');
+      if (error) throw error;
+      if (!data || !data.length) throw new Error('Blocked by security rules. Run admin-policies.sql.');
+      ad.status = act;
+      toast(act === 'APPROVED' ? 'Approved: now live' : 'Moved to Rejected');
+    }
+    renderAll();
+  } catch (err) {
+    toast(err.message, true);
+  } finally { b.disabled = false; b.classList.remove('opacity-60'); }
+});
+
+/* =================== Users =================== */
+function renderUsers() {
+  const box = $('listBox');
+  let rows = profiles.slice();
+  if (query) rows = rows.filter(p => [p.name, p.email, p.phone, p.city].some(v => String(v || '').toLowerCase().includes(query)));
+  rows.sort((x, y) => new Date(y.created_at || 0) - new Date(x.created_at || 0));
+  if (!rows.length) { box.innerHTML = '<div class="bg-white border border-slate-200 rounded-2xl p-10 text-center text-xs text-slate-400">මෙහි කිසිවක් නොමැත.</div>'; return; }
+  box.innerHTML = `<div class="bg-white border border-slate-200 rounded-2xl overflow-x-auto"><table class="w-full text-xs">
+    <thead class="text-left text-slate-500 border-b border-slate-100"><tr>
+      <th class="p-3 font-semibold">Name</th><th class="p-3 font-semibold">Email</th><th class="p-3 font-semibold">Phone</th><th class="p-3 font-semibold">City</th><th class="p-3 font-semibold">Ads</th><th class="p-3 font-semibold">Joined</th></tr></thead>
+    <tbody>${rows.map(p => `<tr class="border-b border-slate-50 last:border-0">
+      <td class="p-3 font-semibold text-slate-800">${esc(p.name || '-')}</td>
+      <td class="p-3 text-slate-600">${esc(p.email || '-')}</td>
+      <td class="p-3 text-slate-600">${esc(p.phone || '-')}</td>
+      <td class="p-3 text-slate-600">${esc(p.city || '-')}</td>
+      <td class="p-3 text-slate-600">${ads.filter(a => a.user_id === p.id).length}</td>
+      <td class="p-3 text-slate-400">${esc(fmt(p.created_at))}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+/* =================== Site Settings =================== */
+const LANGS = ['en', 'si', 'ta'];
+const LANG_NAME = { en: 'English', si: 'සිංහල', ta: 'தமிழ்' };
+const DEFAULT_BRAND = '#059669', DEFAULT_ACCENT = '#4f46e5';
+
+// t: text | url | email | ml (one line, per language) | mltext (multi-line, per language) | bool | color | image
+const STABS = [
+  { id: 'general', title: 'Shop identity', fields: [
+    { k: 'shop_name', t: 'text', l: 'Shop name', h: 'Shown in the header and footer. Leave empty to keep Francy China Item Online Shop.' },
+    { k: 'shop_tagline', t: 'ml', l: 'Tagline under the name', h: 'Default: Online Shop Market' },
+    { k: 'logo_url', t: 'image', l: 'Logo', h: 'Square image, PNG or SVG with a transparent background works best.' },
+    { k: 'favicon_url', t: 'image', l: 'Favicon (browser tab icon)', h: 'Square PNG, at least 64×64.' },
+    { k: 'site_title', t: 'ml', l: 'Browser tab title' },
+    { k: 'meta_description', t: 'mltext', l: 'Search engine description', h: 'About 150 characters.' }
+  ]},
+  { id: 'home', title: 'Home page', fields: [
+    { k: 'notice_enabled', t: 'bool', l: 'Show the top notice bar' },
+    { k: 'notice_text', t: 'ml', l: 'Notice bar text' },
+    { k: 'hero_enabled', t: 'bool', l: 'Show the hero headline and description', h: 'The category buttons stay visible.' },
+    { k: 'hero_badge', t: 'ml', l: 'Hero badge' },
+    { k: 'hero_title_1', t: 'ml', l: 'Hero headline, first line', h: 'Fill in both lines, or leave both empty to keep the default.' },
+    { k: 'hero_title_2', t: 'ml', l: 'Hero headline, second line (highlighted)' },
+    { k: 'hero_desc', t: 'mltext', l: 'Hero description' },
+    { k: 'show_safety_box', t: 'bool', l: 'Show the safety tips box beside the items' }
+  ]},
+  { id: 'colors', title: 'Colors', fields: [
+    { k: 'color_brand', t: 'color', l: 'Main color', d: DEFAULT_BRAND, h: 'Buttons, links and highlights. Lighter and darker shades are made automatically.' },
+    { k: 'color_accent', t: 'color', l: 'Accent color', d: DEFAULT_ACCENT, h: 'Used in the logo gradient and header strip.' }
+  ]},
+  { id: 'footer', title: 'Footer & contact', fields: [
+    { k: 'footer_desc', t: 'mltext', l: 'Footer description' },
+    { k: 'support_email', t: 'email', l: 'Support email' },
+    { k: 'copyright', t: 'text', l: 'Copyright line', h: 'Example: © 2026 Francy China Item Online Shop. All rights reserved.' },
+    { k: 'facebook_url', t: 'url', l: 'Facebook page link' },
+    { k: 'instagram_url', t: 'url', l: 'Instagram link' },
+    { k: 'whatsapp_url', t: 'url', l: 'WhatsApp link', h: 'Example: https://wa.me/94771234567' }
+  ]},
+  { id: 'pages', title: 'Policy pages', fields: [
+    { k: 'privacy_text', t: 'mltext', l: 'Privacy Policy', rows: 8, h: 'Empty keeps the built-in text. Blank lines make new paragraphs.' },
+    { k: 'terms_text', t: 'mltext', l: 'Terms of Service', rows: 8 },
+    { k: 'about_text', t: 'mltext', l: 'About Us', rows: 8 },
+    { k: 'contact_text', t: 'mltext', l: 'Contact Us', rows: 8 }
+  ]},
+  { id: 'ads', title: 'Ads', fields: [
+    { k: 'ad_top_enabled', t: 'bool', l: 'Show the top banner (728×90)', h: 'The banner code itself stays in index.html.' },
+    { k: 'ad_social_enabled', t: 'bool', l: 'Show the Social Bar', h: 'Turning it off takes effect on the next page load.' },
+    { k: 'ad_social_src', t: 'url', l: 'Social Bar script URL (optional)', h: 'Leave empty to use the built-in Adsterra Social Bar.' },
+    { k: 'ad_native_enabled', t: 'bool', l: 'Show the Native Banner' },
+    { k: 'ad_native_src', t: 'url', l: 'Native Banner script URL' },
+    { k: 'ad_native_container', t: 'text', l: 'Native Banner container id', h: 'Example: container-873506ccf659773172be916bcbd6dd4c' }
+  ]}
+];
+const ALL = STABS.flatMap(t => t.fields);
+let S = {}, sTab = 'general', editLang = 'en';
+
+const mlObj = v => (v && typeof v === 'object') ? { en: '', si: '', ta: '', ...v } : { en: v || '', si: '', ta: '' };
+const isEmpty = v => v == null || v === '' || (typeof v === 'object' && !Object.values(v).some(Boolean));
+
+function renderSettings() {
+  $('sTabs').innerHTML = STABS.map(t => `<button type="button" data-stab="${t.id}" class="px-3.5 py-2 rounded-xl text-xs font-bold ${t.id === sTab ? 'pill-on' : 'pill-off'}">${esc(t.title)}</button>`).join('');
+  document.querySelectorAll('.langBtn').forEach(b => {
+    const on = b.dataset.lang === editLang;
+    b.className = 'langBtn px-3 py-1.5 rounded-lg text-xs font-semibold ' + (on ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-800');
+  });
+  const t = STABS.find(x => x.id === sTab);
+  const hasMl = t.fields.some(f => f.t === 'ml' || f.t === 'mltext');
+  $('langNote').textContent = hasMl ? `Text fields on this tab are shown in ${LANG_NAME[editLang]}. Switch language above to edit the others.` : '';
+  $('sPanel').innerHTML = `<h2 class="text-base font-bold text-slate-900">${esc(t.title)}</h2>` + t.fields.map(fieldHtml).join('');
+}
+
+function fieldHtml(f) {
+  const v = S[f.k];
+  const head = `<label class="block text-xs font-semibold text-slate-700 mb-1" for="f_${f.k}">${esc(f.l)}</label>`;
+  const hint = f.h ? `<p class="text-[11px] text-slate-400 mt-1">${esc(f.h)}</p>` : '';
+
+  if (f.t === 'bool') {
+    return `<label class="flex items-center justify-between gap-4 py-1 cursor-pointer">
+      <span><span class="block text-xs font-semibold text-slate-700">${esc(f.l)}</span>${hint}</span>
+      <input type="checkbox" class="sw" data-k="${f.k}" ${v !== false ? 'checked' : ''}></label>`;
+  }
+  if (f.t === 'ml' || f.t === 'mltext') {
+    const o = mlObj(v);
+    const filled = LANGS.filter(l => o[l]).map(l => LANG_NAME[l]).join(', ');
+    const input = f.t === 'ml'
+      ? `<input id="f_${f.k}" data-k="${f.k}" data-l="${editLang}" class="inp" value="${esc(o[editLang])}">`
+      : `<textarea id="f_${f.k}" data-k="${f.k}" data-l="${editLang}" rows="${f.rows || 3}" class="inp">${esc(o[editLang])}</textarea>`;
+    return `<div>${head}${input}<p class="text-[11px] text-slate-400 mt-1">${f.h ? esc(f.h) + ' ' : ''}${filled ? 'Filled in: ' + esc(filled) + '.' : 'Empty, so the default text is used.'}</p></div>`;
+  }
+  if (f.t === 'color') {
+    const cur = /^#[0-9a-f]{6}$/i.test(v || '') ? v : f.d;
+    return `<div>${head}<div class="flex items-center gap-3">
+      <input id="f_${f.k}" type="color" data-k="${f.k}" value="${cur}" class="w-12 h-10 rounded-lg border border-slate-200 bg-white p-1 cursor-pointer">
+      <code class="text-xs text-slate-600" data-colorlabel="${f.k}">${esc(v ? cur : cur + ' (default)')}</code>
+      <button type="button" data-reset="${f.k}" class="text-xs font-semibold text-slate-500 hover:text-slate-800">Reset to default</button>
+    </div>${hint}</div>`;
+  }
+  if (f.t === 'image') {
+    return `<div>${head}<div class="flex items-center gap-4">
+      <div class="w-20 h-20 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden">
+        ${v ? `<img src="${esc(v)}" alt="" class="w-full h-full object-contain">` : '<i class="fa-regular fa-image text-slate-300 text-2xl"></i>'}
+      </div>
+      <div class="space-y-2">
+        <input id="f_${f.k}" type="file" accept="image/*" data-up="${f.k}" class="block text-xs file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:bg-slate-100 file:text-slate-700 file:font-semibold">
+        ${v ? `<button type="button" data-rmimg="${f.k}" class="text-xs font-semibold text-red-600 hover:text-red-700">Remove</button>` : ''}
+      </div></div>${hint}</div>`;
+  }
+  const type = f.t === 'url' ? 'url' : f.t === 'email' ? 'email' : 'text';
+  return `<div>${head}<input id="f_${f.k}" type="${type}" data-k="${f.k}" class="inp" value="${esc(typeof v === 'string' ? v : '')}">${hint}</div>`;
+}
+
+$('sTabs').addEventListener('click', e => { const b = e.target.closest('[data-stab]'); if (b) { sTab = b.dataset.stab; renderSettings(); } });
+$('settingsBox').addEventListener('click', e => {
+  const l = e.target.closest('.langBtn'); if (l) { editLang = l.dataset.lang; renderSettings(); }
+});
+
+$('sPanel').addEventListener('input', e => {
+  const el = e.target, k = el.dataset.k; if (!k) return;
+  if (el.type === 'checkbox') S[k] = el.checked;
+  else if (el.dataset.l) { const o = mlObj(S[k]); o[el.dataset.l] = el.value; S[k] = o; }
+  else {
+    S[k] = el.value;
+    if (el.type === 'color') { const lb = document.querySelector(`[data-colorlabel="${k}"]`); if (lb) lb.textContent = el.value; }
+  }
+});
+$('sPanel').addEventListener('click', e => {
+  const r = e.target.closest('[data-reset]'); if (r) { delete S[r.dataset.reset]; renderSettings(); return; }
+  const m = e.target.closest('[data-rmimg]'); if (m) { delete S[m.dataset.rmimg]; renderSettings(); }
+});
+$('sPanel').addEventListener('change', async e => {
+  const k = e.target.dataset.up; if (!k) return;
+  const file = e.target.files[0]; if (!file) return;
+  if (!file.type.startsWith('image/') || file.size > 3 * 1024 * 1024) return toast('Choose an image under 3 MB.', true);
+  const ext = (file.name.split('.').pop() || 'png').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const path = `${k}_${Date.now()}.${ext}`;
+  const { error } = await sb.storage.from('site-assets').upload(path, file, { contentType: file.type });
+  if (error) return toast('Upload failed: ' + error.message, true);
+  S[k] = sb.storage.from('site-assets').getPublicUrl(path).data.publicUrl;
+  renderSettings();
+  toast('Image uploaded. Click Save changes to apply it.');
+});
+
+$('saveBtn').addEventListener('click', async () => {
+  for (const f of ALL) {
+    const v = S[f.k]; if (isEmpty(v)) continue;
+    if (f.t === 'url' && !/^https:\/\//i.test(v)) return toast(`${f.l}: the link must start with https://`, true);
+    if (f.t === 'color' && !/^#[0-9a-f]{6}$/i.test(v)) return toast(`${f.l}: pick a valid color.`, true);
+    if (f.k === 'ad_native_container' && !/^[\w-]+$/.test(v)) return toast('Native Banner container id may only contain letters, numbers, - and _', true);
+  }
+  const up = [], del = [];
+  ALL.forEach(f => {
+    const v = S[f.k];
+    if (isEmpty(v)) del.push(f.k); else up.push({ key: f.k, value: v, updated_at: new Date().toISOString() });
+  });
+  const btn = $('saveBtn'); btn.disabled = true; btn.classList.add('opacity-60');
+  try {
+    if (up.length) { const { error } = await sb.from('site_settings').upsert(up, { onConflict: 'key' }); if (error) throw error; }
+    if (del.length) { const { error } = await sb.from('site_settings').delete().in('key', del); if (error) throw error; }
+    toast('Saved. Reload the shop to see the changes.');
+  } catch (err) {
+    toast('Could not save: ' + err.message, true);
+  } finally { btn.disabled = false; btn.classList.remove('opacity-60'); }
+});
+
+boot();
+</script>
+</body>
+</html>

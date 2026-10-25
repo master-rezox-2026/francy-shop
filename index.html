@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth i18n-pending">
+<head>
+    <meta charset="UTF-8">
+    <meta name="tl-build" content="TL-BUILD-DIRECT-ADS-v3-SETTINGS">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Francy China Item Online Shop</title>
+    <!-- භාෂාව යෙදෙන තෙක් පිටුව සඟවයි (සිංහල පෙළ ක්ෂණිකව පෙනීම වැළැක්වීමට) -->
+    <style>html.i18n-pending body { visibility: hidden; }</style>
+    <noscript><style>html.i18n-pending body { visibility: visible; }</style></noscript>
+    <script>setTimeout(function () { document.documentElement.classList.remove('i18n-pending'); }, 4000);</script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font Inter / Noto Sans Sinhala -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Default වර්ණ (Admin එකෙන් වෙනස් කළ හැක) -->
+    <style>
+    :root{--b50:236 253 245;--b100:209 250 229;--b500:16 185 129;--b600:5 150 105;--b700:4 120 87;--b800:6 95 70;--a500:99 102 241;--a600:79 70 229;}
+    </style>
+
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    brand: {
+                        50:  'rgb(var(--b50) / <alpha-value>)',
+                        100: 'rgb(var(--b100) / <alpha-value>)',
+                        500: 'rgb(var(--b500) / <alpha-value>)',
+                        600: 'rgb(var(--b600) / <alpha-value>)',
+                        700: 'rgb(var(--b700) / <alpha-value>)',
+                        800: 'rgb(var(--b800) / <alpha-value>)',
+                    },
+                    accent: {
+                        500: 'rgb(var(--a500) / <alpha-value>)',
+                        600: 'rgb(var(--a600) / <alpha-value>)',
+                    }
+                },
+                fontFamily: {
+                    // සිංහල අකුරු සඳහා Sinhala Sangam MN font එක ප්‍රමුඛතාවය ලෙස ලබා දීම
+                    sans: ['Inter', '"Noto Sans Sinhala"', '"Noto Sans Tamil"', '"Sinhala Sangam MN"', 'sans-serif'],
+                }
+            }
+        }
+    }
+    </script>
+    <!-- Admin Settings loader -->
+    <script src="site-settings.js?v=4"></script>
+    <style>
+    /* සියලුම අකුරු සඳහා Font එක ස්ථිරවම යෙදීම */
+    body {
+        font-family: 'Inter', 'Noto Sans Sinhala', 'Noto Sans Tamil', 'Sinhala Sangam MN', sans-serif !important;
+    }
+
+    /* Custom scrollbar & visual refinements */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+    .ptab-btn { display:flex; align-items:center; gap:.5rem; padding:.625rem 1rem; border-radius:.75rem; font-size:.875rem; font-weight:600; white-space:nowrap; }\n    /* Francy storefront polish: motion, image-led cards and accessible transitions */
+    html { scroll-behavior: smooth; }
+    @keyframes francyRise { from { opacity:0; transform:translateY(18px) } to { opacity:1; transform:translateY(0) } }
+    #homeView > div.mb-8 { animation: francyRise .7s ease both; background-image: linear-gradient(100deg,rgba(15,23,42,.96),rgba(15,23,42,.72)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85'); background-size:cover; background-position:center; }
+    #itemsGrid > div { animation: francyRise .55s ease both; }
+    button, a, input, select { transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    button:hover { transform: translateY(-1px); }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="#" onclick="event.preventDefault(); showHome()" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition-transform overflow-hidden">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-brand-700 to-accent-600 bg-clip-text text-transparent tracking-tight">Francy China Item Online Shop</span>
+                    <span class="block text-[10px] text-slate-400 font-semibold -mt-1 uppercase tracking-wider">CHINA IMPORTS • BEAUTY • FASHION</span>
+                </div>
+            </a>
+
+            <!-- Global Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-md mx-4">
+                <div class="relative w-full">
+                    <input type="text" id="globalSearchInput" onkeyup="handleSearch()" placeholder="Search China imports, clothes, creams..." 
+                        class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 border border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-slate-400 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Language Switcher -->
+                <div class="relative" id="langWrap">
+                    <button type="button" id="langBtn" onclick="toggleLangMenu(event)" title="Language" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-2.5 py-2 rounded-xl transition-all border border-slate-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-globe text-slate-500"></i><span id="langCode" data-i18n-skip class="font-bold">EN</span>
+                    </button>
+                    <div id="langMenu" class="hidden absolute right-0 mt-2 w-36 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-40 text-sm">
+                        <button type="button" data-lang="en" onclick="setLanguage('en')" class="w-full text-left px-4 py-2.5 hover:bg-slate-50">English</button>
+                        <button type="button" data-lang="si" onclick="setLanguage('si')" class="w-full text-left px-4 py-2.5 hover:bg-slate-50">සිංහල</button>
+                        <button type="button" data-lang="ta" onclick="setLanguage('ta')" class="w-full text-left px-4 py-2.5 hover:bg-slate-50">தமிழ்</button>
+                    </div>
+                </div>
+
+                
+<!-- Post Ad Button -->
+                <button onclick="openPostAdModal()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span class="hidden xs:inline">ඇඩ් එකක් දාන්න</span>
+                    <span class="xs:hidden">ඇඩ් දාන්න</span>
+                </button>
+
+                <!-- Auth Buttons Container -->
+                <div id="authButtons" data-i18n-skip class="flex items-center gap-2">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Admin Toggle Button -->
+                <a href="admin.html" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-2.5 py-2 rounded-xl transition-all border border-slate-200" title="Admin Panel">
+                    <i class="fa-solid fa-user-shield text-slate-600"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Search Bar -->
+        <div class="md:hidden px-4 pb-3 pt-1 border-t border-slate-100">
+            <div class="relative w-full">
+                <input type="text" id="globalSearchInputMobile" onkeyup="handleSearchMobile()" placeholder="Search products..." 
+                    class="w-full pl-9 pr-4 py-2 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main id="homeView" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- Hero & Filter Header Section -->
+        <div class="mb-8 bg-gradient-to-r from-slate-900 via-brand-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-2xl">
+                <span class="inline-block bg-brand-500/20 text-brand-300 text-xs font-semibold px-3 py-1 rounded-full mb-3 border border-brand-500/30">
+                    ✨ YOUR EVERYDAY FINDS, ALL IN ONE PLACE
+                </span>
+                <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2 leading-tight">
+                    Discover your new <br class="hidden sm:inline"><span class="text-brand-400">favourite things!</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 mb-6">
+                    Shop trending China imports, stylish clothes, beauty creams and everyday essentials — all in one convenient online shop.
+                </p>
+
+                <!-- Category Chips -->
+                <div class="flex flex-wrap gap-2 text-xs font-medium">
+                    <button onclick="filterCategory('ALL')" id="catBtn-ALL" class="cat-filter-btn active bg-brand-600 text-white px-4 py-2 rounded-xl transition-all shadow-sm">
+                        සියල්ල (All)
+                    </button>
+                    <button onclick="filterCategory('Clothes')" id="catBtn-Clothes" class="cat-filter-btn bg-white/10 hover:bg-white/20 text-slate-200 px-4 py-2 rounded-xl transition-all">
+                        <i class="fa-solid fa-shirt mr-1"></i> ඇඳුම් (Clothes)
+                    </button>
+                    <button onclick="filterCategory('Shoes')" id="catBtn-Shoes" class="cat-filter-btn bg-white/10 hover:bg-white/20 text-slate-200 px-4 py-2 rounded-xl transition-all">
+                        <i class="fa-solid fa-shoe-prints mr-1"></i> සපත්තු (Shoes)
+                    </button>
+                    <button onclick="filterCategory('Accessories')" id="catBtn-Accessories" class="cat-filter-btn bg-white/10 hover:bg-white/20 text-slate-200 px-4 py-2 rounded-xl transition-all">
+                        <i class="fa-solid fa-bag-shopping mr-1"></i> Bags & Accessories
+                    </button>
+                    <button onclick="filterCategory('Beauty')" id="catBtn-Beauty" class="cat-filter-btn bg-white/10 hover:bg-white/20 text-slate-200 px-4 py-2 rounded-xl transition-all">
+                        <i class="fa-solid fa-spa mr-1"></i> Beauty & Creams
+                    </button>
+                    <button onclick="filterCategory('Imported')" id="catBtn-Imported" class="cat-filter-btn bg-white/10 hover:bg-white/20 text-slate-200 px-4 py-2 rounded-xl transition-all">
+                        <i class="fa-solid fa-box-open mr-1"></i> China Imports
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual category highlights -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8" aria-label="Shop categories">
+          <button onclick="showCategoryAndScroll('Imported')" class="group relative min-h-36 overflow-hidden rounded-2xl text-left shadow-md bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" alt="Accessories and imported finds" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105"/>
+            <span class="absolute inset-0 bg-gradient-to-r from-slate-950/85 to-transparent"></span>
+            <span class="relative block p-5 text-white"><span class="text-xs uppercase tracking-widest text-emerald-200">Fresh arrivals</span><strong class="mt-1 block text-xl">China Imports</strong><span class="text-sm text-white/80">Explore new finds →</span></span>
+          </button>
+          <button onclick="showCategoryAndScroll('Clothes')" class="group relative min-h-36 overflow-hidden rounded-2xl text-left shadow-md bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80" alt="Fashion clothing collection" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105"/>
+            <span class="absolute inset-0 bg-gradient-to-r from-slate-950/85 to-transparent"></span>
+            <span class="relative block p-5 text-white"><span class="text-xs uppercase tracking-widest text-pink-200">Style edit</span><strong class="mt-1 block text-xl">Clothing</strong><span class="text-sm text-white/80">Find your look →</span></span>
+          </button>
+          <button onclick="showCategoryAndScroll('Beauty')" class="group relative min-h-36 overflow-hidden rounded-2xl text-left shadow-md bg-slate-900">
+            <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80" alt="Beauty and skincare products" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105"/>
+            <span class="absolute inset-0 bg-gradient-to-r from-slate-950/85 to-transparent"></span>
+            <span class="relative block p-5 text-white"><span class="text-xs uppercase tracking-widest text-amber-200">Beauty picks</span><strong class="mt-1 block text-xl">Beauty & Creams</strong><span class="text-sm text-white/80">Discover skincare →</span></span>
+          </button>
+        </section>
+
+        <!-- Controls Row (Sort & Stats) -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div>
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <span>නවතම භාණ්ඩ</span>
+                    <span id="activeFilterBadge" class="text-xs bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full font-normal">සියල්ල</span>
+                </h2>
+                <p class="text-xs text-slate-500" id="itemCountText">තෝරාගත් භාණ්ඩ පෙන්වයි</p>
+            </div>
+
+            <!-- Sorting Dropdown -->
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+                <label for="sortSelect" class="text-xs text-slate-500 font-medium">පිළිවෙල:</label>
+                <select id="sortSelect" onchange="applySorting()" class="text-xs bg-white border border-slate-200 rounded-lg px-3 py-2 font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <option value="newest">නවතම ඒව (Newest First)</option>
+                    <option value="priceLow">මිල: අඩුම සිට වැඩිම (Price: Low to High)</option>
+                    <option value="priceHigh">මිල: වැඩිම සිට අඩුම (Price: High to Low)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Layout Grid with Main Feed & Side Tips -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+            <!-- Storefront Items Grid (3 Columns on Desktop) -->
+            <div class="lg:col-span-3">
+                <div id="itemsGrid" data-i18n-skip class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                    <!-- Cards injected dynamically via JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden bg-white border border-slate-200 rounded-2xl p-12 text-center my-8">
+                    <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-700 mb-1">කිසිදු භාණ්ඩයක් හමු නොවුනි</h3>
+                    <p class="text-xs text-slate-500 mb-4">ඔබ සෙවූ පරාමිතීන්ට අදාළ භාණ්ඩ දැනට නොමැත. කරුණාකර වෙනත් නමක් සෙවුම් කරන්න.</p>
+                    <button onclick="resetFilters()" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-semibold px-4 py-2 rounded-lg transition-all">
+                        සියලුම භාණ්ඩ පෙන්වන්න
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sidebar Column (Safety Tips) -->
+            <div class="lg:col-span-1 space-y-6">
+                
+                <!-- Buyer Safety Box -->
+                <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 text-emerald-900 shadow-sm">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-brand-800 flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-shield-halved text-brand-600"></i>
+                        ආරක්ෂිත මිලදී ගැනීමේ උපදෙස්
+                    </h4>
+                    <ul class="text-xs space-y-2 text-emerald-800/90 leading-relaxed">
+                        <li class="flex items-start gap-1.5">
+                            <i class="fa-solid fa-check text-brand-600 text-[10px] mt-1"></i>
+                            <span>භාණ්ඩය පරික්ෂා කිරීමට පෙර කිසිවිටෙකත් අත්පිට මුදල් නොගෙවන්න.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <i class="fa-solid fa-check text-brand-600 text-[10px] mt-1"></i>
+                            <span>විකුණුම්කරුගේ WhatsApp අංකයට සෘජුවම සම්බන්ධ වී විස්තර තහවුරු කරගන්න.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <i class="fa-solid fa-check text-brand-600 text-[10px] mt-1"></i>
+                            <span>Cash on Delivery (COD) කුරියර් පහසුකම් භාවිතා කිරීමට උත්සාහ කරන්න.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        </main>
+
+    <!-- PROFILE PAGE (වෙනම පිටුවක් ලෙස) -->
+    <main id="profileView" class="hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        <button onclick="showHome()" class="text-xs font-semibold text-slate-500 hover:text-brand-600 mb-4 transition-colors">← Back to shop</button>
+
+        <!-- Profile header -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 flex items-center gap-4 mb-5">
+            <div id="profAvatar" class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-accent-500 text-white text-2xl font-bold flex items-center justify-center flex-shrink-0">?</div>
+            <div class="min-w-0 flex-1">
+                <h1 id="profHeadName" class="text-lg font-bold text-slate-900 truncate"></h1>
+                <p id="profHeadEmail" class="text-xs text-slate-500 truncate"></p>
+                <p id="profHeadCity" class="text-xs text-slate-400 truncate"></p>
+            </div>
+            <button onclick="handleLogout()" class="text-xs text-red-600 font-semibold bg-red-50 hover:bg-red-100 px-3.5 py-2 rounded-xl transition-all flex-shrink-0"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</button>
+        </div>
+
+        <div class="grid md:grid-cols-[210px_minmax(0,1fr)] gap-5">
+            <!-- Tabs -->
+            <nav class="flex md:flex-col gap-2 overflow-x-auto pb-1 md:pb-0 self-start md:w-full">
+                <button id="ptabBtn-ads" onclick="setProfileTab('ads')" class="ptab-btn"><i class="fa-solid fa-rectangle-list w-4 text-center"></i><span>My Ads</span></button>
+                <button id="ptabBtn-details" onclick="setProfileTab('details')" class="ptab-btn"><i class="fa-solid fa-user-pen w-4 text-center"></i><span>Profile Details</span></button>
+                <button id="ptabBtn-password" onclick="setProfileTab('password')" class="ptab-btn"><i class="fa-solid fa-lock w-4 text-center"></i><span>Password</span></button>
+            </nav>
+
+            <section class="min-w-0">
+                <!-- My Ads -->
+                <div id="ptab-ads" class="space-y-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3 text-center"><div id="statTotal" class="text-xl font-extrabold text-slate-900">0</div><div class="text-[11px] text-slate-500">Total</div></div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3 text-center"><div id="statApproved" class="text-xl font-extrabold text-emerald-600">0</div><div class="text-[11px] text-slate-500">Approved</div></div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3 text-center"><div id="statPending" class="text-xl font-extrabold text-amber-600">0</div><div class="text-[11px] text-slate-500">Pending</div></div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-3 text-center"><div id="statRejected" class="text-xl font-extrabold text-red-600">0</div><div class="text-[11px] text-slate-500">Rejected</div></div>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900">Your ads</h2>
+                            <p class="text-xs text-slate-500">Edit or delete your ads here. Editing an ad sends it for Admin approval again.</p>
+                        </div>
+                        <button onclick="openPostAdModal()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl shadow-md transition-all flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap"><i class="fa-solid fa-plus-circle"></i><span>Post New Ad</span></button>
+                    </div>
+                    <div id="myAdsList" data-i18n-skip class="space-y-3"></div>
+                </div>
+
+                <!-- Profile details -->
+                <div id="ptab-details" class="hidden bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-sm">
+                    <h2 class="text-base font-bold text-slate-900 mb-4">Profile Details</h2>
+                    <form id="profileForm" onsubmit="handleProfileSave(event)" class="space-y-3.5 text-xs max-w-lg">
+                        <p id="profileMsg" class="hidden"></p>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Login Email <span class="text-slate-400 font-normal">(cannot be changed)</span></label>
+                            <input type="email" id="profEmail" disabled class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Name *</label>
+                            <input type="text" id="profName" required minlength="2" maxlength="60" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Phone / WhatsApp number</label>
+                            <input type="tel" id="profPhone" maxlength="20" placeholder="0771234567" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                            <p class="text-[10px] text-slate-400 mt-1">Used to auto-fill new ads.</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">City</label>
+                            <input type="text" id="profCity" maxlength="80" placeholder="Colombo" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">About me (Bio)</label>
+                            <textarea id="profBio" rows="3" maxlength="300" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none"></textarea>
+                        </div>
+                        <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all">Save details</button>
+                    </form>
+                </div>
+
+                <!-- Password -->
+                <div id="ptab-password" class="hidden bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-sm">
+                    <h2 class="text-base font-bold text-slate-900 mb-4">Choose a new password</h2>
+                    <form id="passForm" onsubmit="handlePasswordChange(event)" class="space-y-3.5 text-xs max-w-lg">
+                        <p id="passMsg" class="hidden"></p>
+                        <input type="password" id="profNewPass" required minlength="6" placeholder="අලුත් මුරපදය (අවම අක්ෂර 6)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                        <input type="password" id="profNewPass2" required minlength="6" placeholder="නැවත ඇතුළත් කරන්න" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                        <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-6 py-3 rounded-xl transition-all">මුරපදය වෙනස් කරන්න</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Advertisement: Adsterra Banner 728x90 (පිටුවේ යට) -->
+    <div id="adTopWrap" class="max-w-7xl mx-auto px-4 mt-8 w-full">
+        <p class="text-[10px] uppercase tracking-wider text-slate-400 text-center mb-1">Advertisement</p>
+        <div id="adTop" style="width:100%;height:90px;overflow:hidden;">
+            <div id="adTopInner" data-i18n-skip style="width:728px;height:90px;margin:0 auto;transform-origin:top left;">
+                <script>
+                      atOptions = {
+                        'key' : '64c90c5bf24cebab97f7d07a7ddcca39',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                          };
+                </script>
+<script src="https://bauval.org/22/64c90c5bf24cebab97f7d07a7ddcca39"></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand Info -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold overflow-hidden">
+                            <i class="fa-solid fa-shirt"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white tracking-tight">Francy China Item Online Shop</span>
+                    </div>
+                    <p class="leading-relaxed text-slate-400">
+                        ශ්‍රී ලාංකිකයන් සඳහාම විශේෂයෙන් සකස් කළ භාවිත කළ ඇඳුම් සහ සපත්තු මිලදී ගැනීමේ සහ විකිණීමේ අංක 1 වේදිකාව.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider text-[11px] mb-3">ඉක්මන් පිවිසුම්</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showCategoryAndScroll('Clothes')" class="hover:text-white transition-colors">ඇඳුම් (Clothes)</a></li>
+                        <li><a href="#" onclick="showCategoryAndScroll('Shoes')" class="hover:text-white transition-colors">සපත්තු (Shoes)</a></li>
+                        <li><a href="#" onclick="showCategoryAndScroll('Accessories')" class="hover:text-white transition-colors">උපාංග (Accessories)</a></li>
+                        <li><a href="#" onclick="openPostAdModal()" class="hover:text-white transition-colors text-brand-400">ඇඩ් එකක් පළ කරන්න</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal / Policies -->
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider text-[11px] mb-3">නීතිමය සහ පද</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="openModal('privacyModal')" class="hover:text-white transition-colors">Privacy Policy (රහස්‍යතා ප්‍රතිපත්තිය)</a></li>
+                        <li><a href="#" onclick="openModal('termsModal')" class="hover:text-white transition-colors">Terms of Service (සේවා කොන්දේසි)</a></li>
+                        <li><a href="#" onclick="openModal('aboutModal')" class="hover:text-white transition-colors">About Us (අප ගැන)</a></li>
+                        <li><a href="#" onclick="openModal('contactModal')" class="hover:text-white transition-colors">Contact Us (සම්බන්ධ වන්න)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider text-[11px] mb-3">සම්බන්ධ කර ගැනීමට</h4>
+                    <p class="mb-2">විමසීම් සඳහා: support@thriftlanka.lk</p>
+                    <p class="text-slate-500 text-[11px]">Designed for fast C2C trading.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500">
+                <p>© 2026 Francy China Item Online Shop. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook text-base"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram text-base"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-whatsapp text-base"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toastBox" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] space-y-2 pointer-events-none w-[92%] max-w-sm"></div>
+
+    <!-- ==================== MODALS SECTION ==================== -->
+
+    <!-- 1. ITEM DETAILS MODAL (AliExpress-style) -->
+    <div id="itemDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden overflow-y-auto">
+        <div class="min-h-full flex items-start justify-center sm:p-4">
+            <div class="bg-white sm:rounded-3xl max-w-6xl w-full shadow-2xl sm:my-4 relative">
+                <button onclick="closeItemDetail()" class="absolute top-3 right-3 z-20 bg-slate-900/70 hover:bg-slate-900 text-white w-9 h-9 rounded-full flex items-center justify-center transition-all" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="p-4 sm:p-6 grid lg:grid-cols-2 gap-6">
+                    <!-- Gallery: thumbnails + main image -->
+                    <div class="flex flex-col-reverse sm:flex-row gap-3 min-w-0 self-start">
+                        <div id="galleryThumbs" data-i18n-skip class="flex sm:flex-col gap-2 sm:w-16 overflow-x-auto sm:overflow-y-auto sm:max-h-[480px] flex-shrink-0 pb-1"></div>
+                        <div class="relative flex-1 min-w-0 bg-slate-100 rounded-2xl overflow-hidden aspect-square">
+                            <img id="modalItemImage" src="" alt="Product" class="w-full h-full object-contain bg-slate-100">
+                            <span id="modalItemBadge" class="absolute top-3 left-3 bg-slate-900/80 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">Condition</span>
+                            <button id="galPrev" type="button" onclick="galleryStep(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow flex items-center justify-center"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button id="galNext" type="button" onclick="galleryStep(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow flex items-center justify-center"><i class="fa-solid fa-chevron-right"></i></button>
+                            <span id="galCounter" data-i18n-skip class="absolute bottom-3 right-3 bg-black/60 text-white text-[11px] font-semibold px-2.5 py-0.5 rounded-full"></span>
+                        </div>
+                    </div>
+
+                    <!-- Info column -->
+                    <div class="space-y-4 min-w-0">
+                        <h2 id="modalItemTitle" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug pr-10 lg:pr-0">Item Title</h2>
+
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                            <span class="bg-slate-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-full text-[11px]" id="modalItemCategory">Category</span>
+                            <span><i class="fa-solid fa-location-dot text-red-500 mr-1"></i><span id="modalItemLocation">City</span></span>
+                            <span><i class="fa-regular fa-clock mr-1"></i><span id="modalItemDate">Date</span></span>
+                        </div>
+
+                        <!-- Price box -->
+                        <div class="rounded-xl border border-brand-500 overflow-hidden">
+                            <div class="bg-gradient-to-r from-brand-700 to-brand-500 text-white px-4 py-2 text-sm font-bold">Francy China Item Online Shop · Pre-loved Deal</div>
+                            <div class="px-4 py-3">
+                                <span id="modalItemPrice" class="text-3xl font-extrabold text-slate-900">Rs. 0</span>
+                                <p class="text-[11px] text-slate-400 mt-1">විකුණුම්කරු සමඟ සෘජුවම ගනුදෙනු කරන්න</p>
+                            </div>
+                        </div>
+
+                        <!-- Info rows -->
+                        <div class="divide-y divide-slate-100 border border-slate-100 rounded-xl text-sm">
+                            <div class="flex items-center gap-3 p-3">
+                                <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-user"></i></div>
+                                <div class="min-w-0">
+                                    <p class="text-[11px] text-slate-400">Sold By</p>
+                                    <p class="font-bold text-slate-800 truncate"><span id="modalItemSeller">Seller</span></p>
+                                </div>
+                                <span class="ml-auto text-xs text-emerald-600 font-semibold whitespace-nowrap"><i class="fa-solid fa-circle-check mr-1"></i>Verified Seller</span>
+                            </div>
+                            <div class="flex items-center gap-3 p-3">
+                                <i class="fa-solid fa-shirt text-brand-600 w-5 text-center"></i>
+                                <span class="text-slate-500">Condition:</span> <b id="modalItemCondition" class="text-slate-800">-</b>
+                            </div>
+                            <div class="flex items-center gap-3 p-3">
+                                <i class="fa-solid fa-location-dot text-red-500 w-5 text-center"></i>
+                                <span class="text-slate-500">Location:</span> <b id="modalItemLocation2" class="text-slate-800">-</b>
+                            </div>
+                        </div>
+
+
+                        <!-- Description (WhatsApp / Share බොත්තම් වලට උඩින්) -->
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-2">භාණ්ඩ විස්තරය (Item description)</h3>
+                            <p id="modalItemDescription" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line break-words">Description goes here...</p>
+                        </div>
+
+                        <!-- Safety tip -->
+                        <div class="flex items-start gap-3 p-3 text-xs text-slate-500 bg-slate-50 border border-slate-100 rounded-xl">
+                            <i class="fa-solid fa-shield-halved text-brand-600 w-5 text-center mt-0.5"></i>
+                            <span>ආරක්ෂිත ගනුදෙනුවට: මුදල් ගෙවීමට පෙර භාණ්ඩය පරීක්ෂා කරන්න. හැකිනම් මුහුණට මුහුණ හමුවී ගනුදෙනු කරන්න.</span>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="space-y-2 pt-1">
+                            <button id="modalBuyWhatsappBtn" onclick="openOrderModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <i class="fa-brands fa-whatsapp text-xl"></i>
+                                <span>WhatsApp හරහා සෘජුවම මිලදී ගන්න</span>
+                            </button>
+                            <button type="button" onclick="shareAd()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+                                <i class="fa-solid fa-share-nodes"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<!-- 2. WHATSAPP ORDER FORM MODAL -->
+    <div id="orderModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative my-8">
+            <button onclick="closeModal('orderModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-2 text-2xl">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">විකුණුම්කරුට Message එකක් යවන්න</h3>
+                <p class="text-xs text-slate-500">ඔබගේ විස්තර ඇතුළත් කළ පසු WhatsApp ඇප් එක සෘජුවම විවෘත වේ.</p>
+            </div>
+
+            <form id="whatsappOrderForm" onsubmit="sendWhatsAppOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">ඔබගේ නම (Buyer Name) *</label>
+                    <input type="text" id="buyerName" required placeholder="උදා: කසුන් පෙරේරා" 
+                        class="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">දුරකථන අංකය (Phone) *</label>
+                    <input type="tel" id="buyerPhone" required placeholder="උදා: 0771234567" 
+                        class="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">ලිපිනය / නගරය (Delivery Location) *</label>
+                    <input type="text" id="buyerAddress" required placeholder="උදා: නුගේගොඩ, කොළඹ" 
+                        class="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">විශේෂ සටහන් (Optional - Size/Color)</label>
+                    <input type="text" id="buyerNote" placeholder="උදා: Size M ද? Courier කරන්න පුලුවන්ද?" 
+                        class="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md hover:shadow-lg transition-all text-xs flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>WhatsApp වෙත යොමු වන්න</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. POST NEW AD MODAL -->
+    <div id="postAdModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative my-8">
+            <button onclick="closeModal('postAdModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="mb-5">
+                <h3 id="postModalTitle" data-i18n-skip class="text-xl font-bold text-slate-900">නව ඇඩ් එකක් පළ කරන්න</h3>
+                <p class="text-xs text-slate-500">ඔබගේ භාණ්ඩයේ විස්තර ඇතුළත් කරන්න. Admin අනුමැතියෙන් පසු සජීවී වේ.</p>
+            </div>
+
+            <form id="postAdForm" onsubmit="handlePostAdSubmit(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">භාණ්ඩයේ නම (Title) *</label>
+                    <input type="text" id="adTitle" required placeholder="උදා: Mens Denim Jacket (Size L)" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">වර්ගය (Category) *</label>
+                        <select id="adCategory" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                            <option value="Imported">China Imports</option>
+                            <option value="Clothes">Clothes</option>
+                            <option value="Beauty">Beauty & Creams</option>
+                            <option value="Accessories">Bags & Accessories</option>
+                            <option value="Shoes">Shoes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">තත්වය (Condition) *</label>
+                        <select id="adCondition" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                            <option value="Like New">Like New (අලුත් වගේමයි)</option>
+                            <option value="Good">Good (හොඳ තත්වයේ)</option>
+                            <option value="Used">Used (පාවිච්චි කළ)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">මිල LKR (Price) *</label>
+                        <input type="number" id="adPrice" required placeholder="2500" 
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">නගරය (City) *</label>
+                        <input type="text" id="adLocation" required placeholder="උදා: Kandy" 
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">WhatsApp අංකය (Seller WhatsApp) *</label>
+                    <input type="tel" id="adWhatsapp" required placeholder="0771234567" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">ඡායාරූප (Photos) * <span class="text-slate-400 font-normal">– උපරිම 6ක්. පළමු එක Main ඡායාරූපයයි.</span></label>
+                    <div id="photoGrid" data-i18n-skip class="grid grid-cols-3 sm:grid-cols-4 gap-2"></div>
+                    <input type="file" id="adImageFile" accept="image/*" multiple onchange="previewFileImage(event)" class="hidden">
+                    <p class="text-[10px] text-slate-400 mt-1.5">★ = Main කරන්න • ✂ = Crop • ✕ = ඉවත් කරන්න</p>
+                    <div class="flex gap-2 mt-2">
+                        <input type="url" id="adImageUrl" placeholder="හෝ Image URL එකක් (https://...)"
+                            class="flex-1 min-w-0 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                        <button type="button" onclick="addPhotoUrl()" class="px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-[11px] whitespace-nowrap">එකතු කරන්න</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">විස්තරය (Description) *</label>
+                    <textarea id="adDescription" rows="3" required placeholder="භාණ්ඩය පිළිබඳ වැඩිදුර විස්තර, Size, Brand ආදිය ඇතුළත් කරන්න..." 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none"></textarea>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-[11px] text-amber-800 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                    <span>ඔබ පළ කරන ඇඩ් එක පරිපාලක (Admin) විසින් පරීක්ෂා කර අනුමත (Approve) කළ පසු වෙබ් අඩවියේ පෙන්වනු ඇත.</span>
+                </div>
+
+                <div class="grid grid-cols-5 gap-2">
+                    <button type="button" onclick="openAdPreview()" class="col-span-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition-all text-xs"><i class="fa-solid fa-eye mr-1"></i> Preview බලන්න</button>
+                    <button type="submit" id="postSubmitBtn" data-i18n-skip class="col-span-3 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md hover:shadow-lg transition-all text-xs">ඇඩ් එක පළ කරන්න (Submit for Approval)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. AUTH / LOGIN / REGISTER MODAL -->
+    <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative my-8">
+            <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200 mb-5">
+                <button id="tabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 font-bold text-sm text-brand-600 border-b-2 border-brand-600 transition-all">ලොග් වන්න (Login)</button>
+                <button id="tabRegister" onclick="switchAuthTab('register')" class="flex-1 py-2 font-bold text-sm text-slate-400 border-b-2 border-transparent transition-all">ලියාපදිංචි වන්න</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-3.5 text-xs">
+                <p id="loginMsg" class="hidden"></p>
+                <div id="resendBox" class="hidden text-[11px]"><button type="button" onclick="resendConfirmation()" class="text-brand-600 font-semibold hover:underline"><i class="fa-solid fa-envelope mr-1"></i>තහවුරු කිරීමේ Email එක නැවත යවන්න</button></div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">විද්‍යුත් තැපෑල (Email)</label>
+                    <input type="email" id="loginEmail" required placeholder="seller@gmail.com" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">මුරපදය (Password)</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+                <div class="text-right -mt-1"><button type="button" onclick="showForgot()" class="text-[11px] text-brand-600 hover:underline font-semibold">මුරපදය අමතකද? (Forgot Password)</button></div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition-all">
+                    Login
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-3.5 text-xs hidden">
+                <p id="registerMsg" class="hidden"></p>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">සම්පූර්ණ නම (Name)</label>
+                    <input type="text" id="regName" required placeholder="කසුන් සංජීව" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">විද්‍යුත් තැපෑල (Email)</label>
+                    <input type="email" id="regEmail" required placeholder="seller@gmail.com" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">මුරපදය (Password)</label>
+                    <input type="password" id="regPassword" required minlength="6" placeholder="••••••••" 
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition-all">
+                    Register Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. FORGOT PASSWORD MODAL -->
+    <div id="forgotModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative my-8">
+            <button onclick="closeModal('forgotModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl"><i class="fa-solid fa-key"></i></div>
+                <h3 class="text-lg font-bold text-slate-900">මුරපදය අමතකද?</h3>
+                <p class="text-xs text-slate-500">ඔබගේ Email එක දෙන්න. මුරපදය වෙනස් කිරීමේ Link එකක් එයට එවනවා.</p>
+            </div>
+            <form id="forgotForm" onsubmit="handleForgot(event)" class="space-y-3.5 text-xs">
+                <p id="forgotMsg" class="hidden"></p>
+                <input type="email" id="forgotEmail" required placeholder="seller@gmail.com" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition-all">Reset Link එක එවන්න</button>
+                <button type="button" onclick="closeModal('forgotModal');openAuthModal()" class="w-full text-slate-500 hover:text-slate-700 text-[11px] font-semibold">← Login වෙත ආපසු</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6b. SET NEW PASSWORD MODAL (Email link එකෙන් පැමිණි විට) -->
+    <div id="resetModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative my-8">
+            <div class="text-center mb-4">
+                <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-2 text-xl"><i class="fa-solid fa-lock"></i></div>
+                <h3 class="text-lg font-bold text-slate-900">අලුත් මුරපදය ඇතුළත් කරන්න</h3>
+            </div>
+            <form id="resetForm" onsubmit="handleResetPassword(event)" class="space-y-3.5 text-xs">
+                <p id="resetMsg" class="hidden"></p>
+                <input type="password" id="newPassword" required minlength="6" placeholder="අලුත් මුරපදය (අවම අක්ෂර 6)" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                <input type="password" id="newPassword2" required minlength="6" placeholder="නැවත ඇතුළත් කරන්න" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none">
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition-all">මුරපදය වෙනස් කරන්න</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6c. CROP MODAL -->
+    <div id="cropModal" class="fixed inset-0 bg-slate-900/80 z-[60] hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-5 shadow-2xl my-6">
+            <h3 class="text-base font-bold text-slate-900 mb-1">ඡායාරූපය Crop කරන්න <span id="cropCounter" class="text-xs font-semibold text-slate-400 ml-1"></span></h3>
+            <p class="text-[11px] text-slate-500 mb-3">රාමුව ඇදගෙන ගොස් හෝ කොනි අදින්න. පින්තූරය Move කර Zoom (scroll / pinch) කළ හැක.</p>
+            <div class="bg-slate-900 rounded-xl overflow-hidden" style="height:min(55vh,400px)"><img id="cropImage" alt="" class="block max-w-full"></div>
+            <div class="flex flex-wrap items-center gap-2 mt-3">
+                <button type="button" data-r="4/3" onclick="setCropRatio('4/3')" class="ratio-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">4:3</button>
+                <button type="button" data-r="1/1" onclick="setCropRatio('1/1')" class="ratio-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">1:1</button>
+                <button type="button" data-r="3/4" onclick="setCropRatio('3/4')" class="ratio-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">3:4</button>
+                <button type="button" data-r="free" onclick="setCropRatio('free')" class="ratio-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Free</button>
+                <span class="flex-1"></span>
+                <button type="button" onclick="cropZoom(0.1)" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600" title="Zoom in"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                <button type="button" onclick="cropZoom(-0.1)" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600" title="Zoom out"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                <button type="button" onclick="cropRotate(-90)" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600" title="Rotate left"><i class="fa-solid fa-rotate-left"></i></button>
+                <button type="button" onclick="cropRotate(90)" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600" title="Rotate right"><i class="fa-solid fa-rotate-right"></i></button>
+                <button type="button" onclick="cropReset()" class="px-2.5 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold">Reset</button>
+            </div>
+            <div class="flex gap-2 mt-4">
+                <button type="button" onclick="cancelCrop()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs">අවලංගු</button>
+                <button type="button" onclick="applyCrop()" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-xs"><i class="fa-solid fa-crop-simple mr-1"></i> Crop කරන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6d. AD PREVIEW MODAL -->
+    <div id="adPreviewModal" class="fixed inset-0 bg-slate-900/70 z-[60] hidden flex items-start justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-2xl w-full shadow-2xl my-6 overflow-hidden">
+            <div class="bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-semibold px-5 py-2.5"><i class="fa-solid fa-eye mr-1"></i> Preview – ඔබේ ඇඩ් එක පෙනෙන්නේ මෙලෙසයි (තවම පළ කර නැත)</div>
+            <div id="adPreviewBody" data-i18n-skip class="p-5 space-y-5"></div>
+            <div class="flex gap-2 p-4 border-t border-slate-100 bg-slate-50">
+                <button type="button" onclick="closeModal('adPreviewModal')" class="flex-1 bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-xs">← ආපසු Edit කරන්න</button>
+                <button type="button" onclick="submitFromPreview()" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-xs"><i class="fa-solid fa-check mr-1"></i> හරි, පළ කරන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. LEGAL POLICY MODALS (Privacy, Terms, About, Contact) -->
+    <div id="privacyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl relative my-8 text-xs space-y-3 text-slate-700">
+            <button onclick="closeModal('privacyModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-900 border-b pb-2">Privacy Policy (රහස්‍යතා ප්‍රතිපත්තිය)</h3>
+            <p>Francy China Item Online Shop අඩවිය පරිශීලකයින්ගේ රහස්‍යතාවය ඉහළින්ම සුරකියි. අප විසින් ඔබගේ දුරකථන අංකය සහ විස්තර ලබා ගන්නේ C2C මිලදී ගැනීමේ ක්‍රියාවලිය පහසු කිරීම සඳහා පමණි.</p>
+            <p>Francy China Item Online Shop displays advertisements from third-party networks (such as Adsterra). These networks may use cookies to show relevant ads. Advertisers do not receive your account details.</p>
+        </div>
+    </div>
+
+    <div id="termsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl relative my-8 text-xs space-y-3 text-slate-700">
+            <button onclick="closeModal('termsModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-900 border-b pb-2">Terms of Service (සේවා කොන්දේසි)</h3>
+            <p>1. Francy China Item Online Shop යනු විකුණුම්කරුවන් සහ මිලදී ගන්නන් සම්බන්ධ කරන නොමිලේ සපයනු ලබන classifieds වේදිකාවකි.</p>
+            <p>2. නීති විරෝධී හෝ අසැබි දේවල් පළ කිරීම සstrictly තහනම් වේ.</p>
+            <p>3. ඕනෑම ඇඩ් එකක් Approve කිරීම හෝ Reject කිරීමේ සම්පූර්ණ බලතල Admin සතු වේ.</p>
+        </div>
+    </div>
+
+    <div id="aboutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl relative my-8 text-xs space-y-3 text-slate-700">
+            <button onclick="closeModal('aboutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-900 border-b pb-2">About Us (අප ගැන)</h3>
+            <p>Francy China Item Online Shop යනු ශ්‍රී ලංකාවේ භාවිත කළ ඇඳුම් සහ සපත්තු නැවත භාවිතයට ගැනීමට (Sustainable Fashion) දිරිගන්වන C2C Marketplace එකකි.</p>
+        </div>
+    </div>
+
+    <div id="contactModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl relative my-8 text-xs space-y-3 text-slate-700">
+            <button onclick="closeModal('contactModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-900 border-b pb-2">Contact Us (සම්බන්ධ වන්න)</h3>
+            <p>ඔබගේ ගැටළු සහ උපදෙස් සඳහා අප වෙත විද්‍යුත් තැපෑලක් යොමු කරන්න:</p>
+            <p class="font-bold text-brand-600">Email: support@thriftlanka.lk</p>
+        </div>
+    </div>
+
+
+    <!-- Language file -->
+    <script src="i18n.js"></script>
+    <!-- Cropper.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+    <script src="config.js"></script>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const INITIAL_HASH = window.location.hash || '';
+
+        // =====================================================================
+        //  i18n engine  (පරිවර්තන i18n.js ගොනුවේ)
+        // =====================================================================
+        const I18N = window.TL_I18N || {};
+        const LANGS = ['en', 'si', 'ta'];
+        const LOCALES = { en: 'en-GB', si: 'si-LK', ta: 'ta-LK' };
+        let LANG = 'en'; // Default: English
+        try { const sv = localStorage.getItem('tl_lang'); if (LANGS.includes(sv)) LANG = sv; } catch (e) {}
+
+        function t(key, vars) {
+            const e = I18N[key];
+            let s = e ? (e[LANG] || e.en || key) : key;
+            if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
+            return s;
+        }
+        const lbl = (prefix, v) => (I18N[prefix + v] ? t(prefix + v) : v);
+
+        function translateDOM(root) {
+            root = root || document.body;
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(n) {
+                    if (!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                    const p = n.parentElement;
+                    if (!p || p.closest('script,style,[data-i18n-skip]')) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+            const nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            nodes.forEach(n => {
+                const src = n.__src || window.TL_NORM(n.nodeValue);
+                const e = I18N[src];
+                if (!e) return;
+                n.__src = src;
+                const lead = n.nodeValue.match(/^\s*/)[0], trail = n.nodeValue.match(/\s*$/)[0];
+                n.nodeValue = lead + (e[LANG] || e.en) + trail;
+            });
+            root.querySelectorAll('[placeholder],[title],[alt]').forEach(el => {
+                if (el.closest('[data-i18n-skip]')) return;
+                el.__attrSrc = el.__attrSrc || {};
+                ['placeholder', 'title', 'alt'].forEach(a => {
+                    if (!el.hasAttribute(a)) return;
+                    const src = el.__attrSrc[a] || window.TL_NORM(el.getAttribute(a));
+                    const e = I18N[src];
+                    if (e) { el.__attrSrc[a] = src; el.setAttribute(a, e[LANG] || e.en); }
+                });
+            });
+        }
+
+        function applyLanguage() {
+            document.documentElement.lang = LANG;
+            document.title = t('doc.title');
+            translateDOM(document.body);
+            // Admin Settings (Shop name, Logo, Hero, Footer ආදිය) – translateDOM එකට පසුව යෙදිය යුතුයි
+            if (window.TL_SITE) TL_SITE.apply(LANG);
+            const lc = document.getElementById('langCode');
+            if (lc) lc.textContent = { en: 'EN', si: 'සිං', ta: 'தமி' }[LANG];
+            const lb = document.getElementById('langBtn');
+            if (lb) lb.title = t('lang.title');
+            document.querySelectorAll('#langMenu [data-lang]').forEach(b => {
+                const on = b.dataset.lang === LANG;
+                b.classList.toggle('bg-brand-50', on);
+                b.classList.toggle('text-brand-700', on);
+                b.classList.toggle('font-bold', on);
+            });
+            updateAuthUI();
+            if (adsLoaded) renderStorefront();
+            renderPhotoManager();
+            setPostModalMode(!!editingAd);
+            if (currentView === 'profile') { renderProfileHeader(); renderMyAds(); }
+            if (currentSelectedItem && !document.getElementById('itemDetailModal').classList.contains('hidden')) fillDetailTexts(currentSelectedItem);
+        }
+
+        function setLanguage(l) {
+            if (!LANGS.includes(l)) return;
+            LANG = l;
+            try { localStorage.setItem('tl_lang', l); } catch (e) {}
+            document.getElementById('langMenu').classList.add('hidden');
+            applyLanguage();
+        }
+        function toggleLangMenu(e) {
+            e.stopPropagation();
+            document.getElementById('langMenu').classList.toggle('hidden');
+        }
+        document.addEventListener('click', e => {
+            if (!e.target.closest('#langWrap')) { const m = document.getElementById('langMenu'); if (m) m.classList.add('hidden'); }
+        });
+
+        // =====================================================================
+        //  Supabase client
+        // =====================================================================
+        const CFG = window.TL_CONFIG || {};
+        const CONFIGURED = CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY && !CFG.SUPABASE_URL.includes('YOUR_PROJECT');
+        const sb = CONFIGURED ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
+        const FALLBACK_IMG = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=600&q=80';
+        const SITE_URL = window.location.origin + window.location.pathname;
+
+        // ---------- Helpers ----------
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : FALLBACK_IMG;
+        const money = n => Number(n).toLocaleString();
+        const fmtDate = d => new Date(d).toLocaleDateString(LOCALES[LANG]);
+
+        function friendlyError(err) {
+            const m = (err && err.message || '').toLowerCase();
+            if (m.includes('invalid login')) return t('err.invalid_login');
+            if (m.includes('email not confirmed')) return t('err.not_confirmed');
+            if (m.includes('already registered')) return t('err.exists');
+            if (m.includes('rate limit') || m.includes('too many')) return t('err.rate');
+            if (m.includes('row-level security')) return t('err.rls');
+            if (m.includes('password')) return t('err.password');
+            return err && err.message ? err.message : t('err.generic');
+        }
+
+        // බොත්තම ක්ලික් කළ පසු නැවත ක්ලික් වීම වැළැක්වීම (පෙළ වෙනස් නොකරයි)
+        async function busy(btn, fn) {
+            if (btn) { btn.disabled = true; btn.classList.add('opacity-60', 'cursor-wait'); }
+            try { await fn(); } finally { if (btn) { btn.disabled = false; btn.classList.remove('opacity-60', 'cursor-wait'); } }
+        }
+
+        // Popup නොවන කුඩා දැනුම්දීම් (toast)
+        function notify(msg, kind) {
+            const box = document.getElementById('toastBox');
+            if (!box) return;
+            const isErr = kind === 'error';
+            const el = document.createElement('div');
+            el.className = 'pointer-events-auto text-xs font-semibold px-4 py-3 rounded-xl shadow-lg border transition-opacity duration-300 ' +
+                (isErr ? 'bg-red-600 text-white border-red-700' : 'bg-slate-900 text-white border-slate-700');
+            el.textContent = msg;
+            box.appendChild(el);
+            setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, isErr ? 6000 : 3800);
+        }
+        const notifyErr = msg => notify(msg, 'error');
+
+        function formMsg(id, text, ok) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (!text) { el.classList.add('hidden'); el.textContent = ''; return; }
+            el.className = 'text-xs rounded-xl p-2.5 border ' + (ok ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-red-50 text-red-700 border-red-200');
+            el.textContent = text;
+        }
+        function clearFormMsgs() {
+            ['loginMsg', 'registerMsg', 'forgotMsg', 'resetMsg'].forEach(i => formMsg(i, ''));
+            const rb = document.getElementById('resendBox'); if (rb) rb.classList.add('hidden');
+        }
+
+        // ---------- State ----------
+        let adsData = [], adsLoaded = false;
+        let currentUser = null, currentProfile = null;
+        let activeCategory = 'ALL';
+        let currentSelectedItem = null;
+        let currentView = 'home';
+        let editingAd = null, myAdsCache = [];
+
+        // ---------- Views (Home / Profile) ----------
+        function pushUrl(u) { try { history.pushState(null, '', u); } catch (e) {} }
+        function showView(v) {
+            currentView = v;
+            document.getElementById('homeView').classList.toggle('hidden', v !== 'home');
+            document.getElementById('profileView').classList.toggle('hidden', v !== 'profile');
+            window.scrollTo(0, 0);
+        }
+        function showHome(push) {
+            showView('home');
+            if (push !== false) pushUrl(SITE_URL);
+        }
+        function showProfile(tab, push) {
+            if (!currentUser) { openAuthModal(); return; }
+            showView('profile');
+            renderProfileHeader();
+            setProfileTab(tab || 'ads');
+            if (push !== false) pushUrl(SITE_URL + '?page=profile');
+            loadMyAds();
+        }
+        window.addEventListener('popstate', () => {
+            const page = new URLSearchParams(location.search).get('page');
+            if (page === 'profile' && currentUser) showProfile('ads', false);
+            else showHome(false);
+        });
+
+
+        // Banner 728x90 කුඩා තිර වලට ගැළපෙන සේ කුඩා කර (scale) පෙන්වයි – ad එකට වෙනත් බලපෑමක් නැත
+        function fitBanner() {
+            const host = document.getElementById('adTop'), inner = document.getElementById('adTopInner');
+            if (!host || !inner) return;
+            const scale = Math.min(1, host.clientWidth / 728);
+            if (scale < 1) {
+                inner.style.transform = `scale(${scale})`;
+                inner.style.margin = '0';
+                host.style.height = Math.ceil(90 * scale) + 'px';
+            } else {
+                inner.style.transform = '';
+                inner.style.margin = '0 auto';
+                host.style.height = '90px';
+            }
+        }
+        window.addEventListener('resize', fitBanner);
+        window.addEventListener('load', fitBanner);
+
+        // ---------- Init ----------
+        window.addEventListener('DOMContentLoaded', async () => {
+            handleAuthRedirectError();
+            if (!CONFIGURED) {
+                document.getElementById('itemCountText').innerText = t('cfg_missing');
+                return;
+            }
+            sb.auth.onAuthStateChange((event, session) => {
+                setUser(session ? session.user : null);
+                if (event === 'PASSWORD_RECOVERY') openModal('resetModal');
+            });
+            const { data } = await sb.auth.getSession();
+            setUser(data.session ? data.session.user : null);
+            await loadAds();
+            const qs = new URLSearchParams(location.search);
+            if (qs.get('page') === 'profile' && currentUser) showProfile('ads', false);
+            const deepAd = qs.get('ad');
+            if (deepAd) openItemDetailModal(deepAd);
+        });
+
+        function setUser(u) {
+            currentUser = u ? { id: u.id, email: u.email, name: (u.user_metadata && u.user_metadata.name) || u.email.split('@')[0] } : null;
+            updateAuthUI();
+            if (u) setTimeout(loadProfile, 0);
+            else { currentProfile = null; if (currentView === 'profile') showHome(false); }
+        }
+
+        // ---------- Data ----------
+        async function loadAds() {
+            const { data, error } = await sb.from('ads').select('*').eq('status', 'APPROVED').order('created_at', { ascending: false });
+            if (error) { console.error(error); document.getElementById('itemCountText').innerText = t('data_load_error'); return; }
+            adsData = data || [];
+            adsLoaded = true;
+            renderStorefront();
+        }
+
+        // ---------- Storefront ----------
+        function renderStorefront() {
+            const grid = document.getElementById('itemsGrid');
+            const emptyState = document.getElementById('emptyState');
+            const searchVal = (document.getElementById('globalSearchInput').value || document.getElementById('globalSearchInputMobile').value || '').toLowerCase();
+            const sortVal = document.getElementById('sortSelect').value;
+
+            let filtered = adsData.slice();
+            if (activeCategory !== 'ALL') filtered = filtered.filter(ad => ad.category === activeCategory);
+            if (searchVal.trim() !== '') {
+                filtered = filtered.filter(ad =>
+                    ad.title.toLowerCase().includes(searchVal) ||
+                    ad.location.toLowerCase().includes(searchVal) ||
+                    ad.description.toLowerCase().includes(searchVal));
+            }
+            if (sortVal === 'priceLow') filtered.sort((a, b) => a.price - b.price);
+            else if (sortVal === 'priceHigh') filtered.sort((a, b) => b.price - a.price);
+            else filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            document.getElementById('activeFilterBadge').innerText = t('cat.' + activeCategory);
+            document.getElementById('itemCountText').innerText = t('items_found', { n: filtered.length });
+
+            if (filtered.length === 0) { grid.innerHTML = ''; emptyState.classList.remove('hidden'); return; }
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => `
+                <div onclick="openItemDetailModal('${esc(item.id)}')" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col">
+                    <div class="relative overflow-hidden h-52 bg-slate-100">
+                        <img src="${esc(safeUrl(item.image_url))}" alt="${esc(item.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">${esc(lbl('cond.', item.item_condition))}</span>
+                        ${(item.images && item.images.length > 1) ? `<span class="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded-full"><i class="fa-regular fa-images mr-1"></i>${item.images.length}</span>` : ''}
+                        <span class="absolute bottom-3 right-3 bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded-xl shadow-md">Rs. ${money(item.price)}</span>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <span class="text-[10px] font-bold text-brand-600 uppercase tracking-wider block mb-1">${esc(lbl('cat.', item.category))}</span>
+                            <h3 class="font-bold text-slate-800 text-sm line-clamp-2 leading-snug group-hover:text-brand-600 transition-colors">${esc(item.title)}</h3>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-2.5">
+                            <span class="flex items-center gap-1"><i class="fa-solid fa-location-dot text-red-500 text-[11px]"></i> ${esc(item.location)}</span>
+                            <span class="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md font-semibold"><i class="fa-brands fa-whatsapp text-emerald-600 mr-0.5"></i> ${esc(t('order'))}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-white/10', 'text-slate-200');
+            });
+            const activeBtn = document.getElementById(`catBtn-${cat}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white/10', 'text-slate-200');
+                activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-sm');
+            }
+            renderStorefront();
+        }
+        function showCategoryAndScroll(cat) { showHome(); filterCategory(cat); window.scrollTo({ top: 400, behavior: 'smooth' }); }
+        function handleSearch() { renderStorefront(); }
+        function handleSearchMobile() { renderStorefront(); }
+        function applySorting() { renderStorefront(); }
+        function resetFilters() {
+            document.getElementById('globalSearchInput').value = '';
+            document.getElementById('globalSearchInputMobile').value = '';
+            filterCategory('ALL');
+        }
+
+        // ---------- Modals ----------
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // ---------- Item detail (gallery) ----------
+        let galleryImgs = [], galleryIdx = 0;
+
+        function fillDetailTexts(item) {
+            document.getElementById('modalItemTitle').innerText = item.title;
+            document.getElementById('modalItemPrice').innerText = `Rs. ${money(item.price)}`;
+            document.getElementById('modalItemLocation').innerText = item.location;
+            document.getElementById('modalItemLocation2').innerText = item.location;
+            document.getElementById('modalItemBadge').innerText = lbl('cond.', item.item_condition);
+            document.getElementById('modalItemCondition').innerText = lbl('cond.', item.item_condition);
+            document.getElementById('modalItemCategory').innerText = lbl('cat.', item.category);
+            document.getElementById('modalItemDescription').innerText = item.description;
+            document.getElementById('modalItemSeller').innerText = item.seller_name || t('seller');
+            document.getElementById('modalItemDate').innerText = fmtDate(item.created_at);
+        }
+
+        function openItemDetailModal(id) {
+            const item = adsData.find(a => a.id === id);
+            if (!item) return;
+            currentSelectedItem = item;
+            galleryImgs = (item.images && item.images.length ? item.images : [item.image_url]).map(safeUrl);
+
+            document.getElementById('galleryThumbs').innerHTML = galleryImgs.map((u, k) => `
+                <button type="button" data-k="${k}" onmouseenter="setGallery(${k})" onclick="setGallery(${k})" class="gal-thumb flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 border-transparent">
+                    <img src="${esc(u)}" alt="" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
+                </button>`).join('');
+            const multi = galleryImgs.length > 1;
+            document.getElementById('galleryThumbs').classList.toggle('hidden', !multi);
+            document.getElementById('galPrev').classList.toggle('hidden', !multi);
+            document.getElementById('galNext').classList.toggle('hidden', !multi);
+            document.getElementById('galCounter').classList.toggle('hidden', !multi);
+            setGallery(0);
+            fillDetailTexts(item);
+
+            const box = document.getElementById('itemDetailModal');
+            openModal('itemDetailModal');
+            box.scrollTop = 0;
+            try { history.replaceState(null, '', SITE_URL + '?ad=' + encodeURIComponent(item.id)); } catch (e) {}
+        }
+
+        function closeItemDetail() {
+            closeModal('itemDetailModal');
+            try { history.replaceState(null, '', currentView === 'profile' ? SITE_URL + '?page=profile' : SITE_URL); } catch (e) {}
+        }
+
+        function setGallery(i) {
+            if (!galleryImgs.length) return;
+            galleryIdx = (i + galleryImgs.length) % galleryImgs.length;
+            const main = document.getElementById('modalItemImage');
+            main.onerror = () => { main.onerror = null; main.src = FALLBACK_IMG; };
+            main.src = galleryImgs[galleryIdx];
+            document.getElementById('galCounter').innerText = `${galleryIdx + 1} / ${galleryImgs.length}`;
+            document.querySelectorAll('#galleryThumbs .gal-thumb').forEach(b => {
+                const on = Number(b.dataset.k) === galleryIdx;
+                b.classList.toggle('border-slate-900', on);
+                b.classList.toggle('border-transparent', !on);
+            });
+        }
+        function galleryStep(d) { setGallery(galleryIdx + d); }
+
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('itemDetailModal').classList.contains('hidden')) return;
+            if (e.key === 'ArrowLeft') galleryStep(-1);
+            else if (e.key === 'ArrowRight') galleryStep(1);
+            else if (e.key === 'Escape') closeItemDetail();
+        });
+
+        async function shareAd() {
+            if (!currentSelectedItem) return;
+            const url = SITE_URL + '?ad=' + encodeURIComponent(currentSelectedItem.id);
+            try {
+                if (navigator.share) await navigator.share({ title: currentSelectedItem.title, url });
+                else { await navigator.clipboard.writeText(url); notify(t('link_copied')); }
+            } catch (e) { /* user cancelled */ }
+        }
+
+        function openOrderModal() { closeItemDetail(); openModal('orderModal'); }
+
+        function sendWhatsAppOrder(e) {
+            e.preventDefault();
+            if (!currentSelectedItem) return;
+            const name = document.getElementById('buyerName').value.trim();
+            const phone = document.getElementById('buyerPhone').value.trim();
+            const address = document.getElementById('buyerAddress').value.trim();
+            const note = document.getElementById('buyerNote').value.trim();
+
+            let sellerNum = currentSelectedItem.whatsapp.replace(/[^0-9]/g, '');
+            if (sellerNum.startsWith('0')) sellerNum = '94' + sellerNum.substring(1);
+
+            const message = t('wa.msg', {
+                title: currentSelectedItem.title, price: money(currentSelectedItem.price),
+                name, phone, address, note: note ? t('wa.note', { note }) : ''
+            });
+            closeModal('orderModal');
+            window.open(`https://wa.me/${sellerNum}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // =====================================================================
+        //  Photos (multi) / crop / preview / post / edit
+        // =====================================================================
+        const MAX_PHOTOS = 6;
+        let photos = [];            // { kind:'new'|'existing', blob?, previewUrl, url?, original? }
+        let cropper = null, cropObjUrl = null, cropQueue = [], cropCurrentFile = null, cropReplaceIndex = null, cropTotal = 0, cropDone = 0;
+
+        function renderPhotoManager() {
+            const grid = document.getElementById('photoGrid');
+            if (!grid) return;
+            const tiles = photos.map((p, i) => `
+                <div class="relative aspect-square rounded-xl overflow-hidden border-2 ${i === 0 ? 'border-brand-500' : 'border-slate-200'} bg-slate-100">
+                    <img src="${esc(p.previewUrl)}" alt="" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
+                    ${i === 0 ? `<span class="absolute top-1 left-1 bg-brand-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">${esc(t('photo.main'))}</span>` : ''}
+                    <div class="absolute inset-x-0 bottom-0 flex items-center justify-between bg-black/60 text-white px-1.5 py-1 text-[11px]">
+                        ${i > 0 ? `<button type="button" onclick="makeMain(${i})" title="${esc(t('photo.make_main'))}"><i class="fa-solid fa-star"></i></button>` : '<span></span>'}
+                        <button type="button" onclick="recropPhoto(${i})" title="${esc(t('photo.crop'))}"><i class="fa-solid fa-crop-simple"></i></button>
+                        <button type="button" onclick="removePhoto(${i})" title="${esc(t('photo.remove'))}"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>`).join('');
+            const addTile = photos.length < MAX_PHOTOS ? `
+                <button type="button" onclick="document.getElementById('adImageFile').click()" class="aspect-square rounded-xl border-2 border-dashed border-slate-300 hover:border-brand-500 text-slate-400 hover:text-brand-600 flex flex-col items-center justify-center text-[10px] font-semibold text-center leading-tight transition-colors px-1">
+                    <i class="fa-solid fa-plus text-lg mb-1"></i>${esc(t('photo.add'))}<span class="mt-0.5 opacity-70">${photos.length}/${MAX_PHOTOS}</span>
+                </button>` : '';
+            grid.innerHTML = tiles + addTile;
+        }
+
+        function resetPhotos() {
+            photos.forEach(p => { if (p.kind === 'new') URL.revokeObjectURL(p.previewUrl); });
+            photos = [];
+            document.getElementById('adImageUrl').value = '';
+            renderPhotoManager();
+        }
+
+        function makeMain(i) { const [p] = photos.splice(i, 1); photos.unshift(p); renderPhotoManager(); }
+        function removePhoto(i) {
+            const [p] = photos.splice(i, 1);
+            if (p && p.kind === 'new') URL.revokeObjectURL(p.previewUrl);
+            renderPhotoManager();
+        }
+
+        function addPhotoUrl() {
+            const inp = document.getElementById('adImageUrl');
+            const u = inp.value.trim();
+            if (!u) return;
+            if (!/^https:\/\//i.test(u)) return notifyErr(t('photo.url_https'));
+            if (photos.length >= MAX_PHOTOS) return notify(t('photo.max_reached', { n: MAX_PHOTOS }));
+            photos.push({ kind: 'existing', url: u, previewUrl: u });
+            inp.value = '';
+            renderPhotoManager();
+        }
+        function absorbPendingUrl() {
+            const u = document.getElementById('adImageUrl').value.trim();
+            if (/^https:\/\//i.test(u) && photos.length < MAX_PHOTOS) addPhotoUrl();
+        }
+
+        // ----- crop (queue) -----
+        function previewFileImage(e) {
+            let files = Array.from(e.target.files || []);
+            e.target.value = '';
+            files = files.filter(f => f.type.startsWith('image/') && f.size <= 20 * 1024 * 1024);
+            if (!files.length) return notifyErr(t('photo.invalid'));
+            const room = MAX_PHOTOS - photos.length;
+            if (files.length > room) { notify(t('photo.max_more', { n: room })); files = files.slice(0, room); }
+            if (!files.length) return;
+            cropQueue = files; cropTotal = files.length; cropDone = 0;
+            nextCrop();
+        }
+
+        function nextCrop() {
+            if (!cropQueue.length) { closeModal('cropModal'); return; }
+            cropReplaceIndex = null;
+            cropCurrentFile = cropQueue.shift();
+            cropDone++;
+            openCropper(cropCurrentFile, cropTotal > 1 ? `(${cropDone}/${cropTotal})` : '');
+        }
+
+        function openCropper(file, label) {
+            if (cropper) { cropper.destroy(); cropper = null; }
+            if (cropObjUrl) URL.revokeObjectURL(cropObjUrl);
+            cropObjUrl = URL.createObjectURL(file);
+            document.getElementById('cropCounter').innerText = label || '';
+            const img = document.getElementById('cropImage');
+            img.onload = () => {
+                if (cropper) cropper.destroy();
+                cropper = new Cropper(img, { aspectRatio: 4 / 3, viewMode: 1, dragMode: 'move', autoCropArea: 1, background: false, guides: true });
+                setRatioBtn('4/3');
+            };
+            img.src = cropObjUrl;
+            openModal('cropModal');
+        }
+
+        function setCropRatio(label) {
+            if (!cropper) return;
+            cropper.setAspectRatio(label === 'free' ? NaN : (label === '1/1' ? 1 : (label === '3/4' ? 3 / 4 : 4 / 3)));
+            setRatioBtn(label);
+        }
+        function setRatioBtn(label) {
+            document.querySelectorAll('.ratio-btn').forEach(b => {
+                const on = b.dataset.r === label;
+                b.className = 'ratio-btn px-3 py-1.5 rounded-lg text-xs font-semibold ' + (on ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200');
+            });
+        }
+        function cropRotate(deg) { if (cropper) cropper.rotate(deg); }
+        function cropZoom(v) { if (cropper) cropper.zoom(v); }
+        function cropReset() { if (cropper) cropper.reset(); }
+
+        function cancelCrop() {
+            if (cropper) { cropper.destroy(); cropper = null; }
+            if (cropReplaceIndex === null && cropQueue.length) nextCrop();
+            else closeModal('cropModal');
+        }
+
+        function applyCrop() {
+            if (!cropper) return;
+            const canvas = cropper.getCroppedCanvas({ maxWidth: 1200, maxHeight: 1200, fillColor: '#fff', imageSmoothingQuality: 'high' });
+            canvas.toBlob(blob => {
+                const item = { kind: 'new', blob, previewUrl: URL.createObjectURL(blob), original: cropCurrentFile };
+                if (cropReplaceIndex !== null && photos[cropReplaceIndex]) {
+                    const old = photos[cropReplaceIndex];
+                    if (old.kind === 'new') URL.revokeObjectURL(old.previewUrl);
+                    photos[cropReplaceIndex] = item;
+                } else photos.push(item);
+                cropper.destroy(); cropper = null;
+                renderPhotoManager();
+                if (cropReplaceIndex === null && cropQueue.length) nextCrop();
+                else closeModal('cropModal');
+            }, 'image/jpeg', 0.85);
+        }
+
+        async function recropPhoto(i) {
+            const p = photos[i];
+            if (!p) return;
+            let file = p.original;
+            if (!file) {
+                try {
+                    const r = await fetch(p.url);
+                    const b = await r.blob();
+                    file = new File([b], 'photo.jpg', { type: b.type || 'image/jpeg' });
+                    p.original = file;
+                } catch (e) { return notifyErr(t('photo.recrop_fail')); }
+            }
+            cropQueue = []; cropReplaceIndex = i; cropCurrentFile = file;
+            openCropper(file, '');
+        }
+
+        function removeStorageImage(url) {
+            const marker = '/ad-images/';
+            if (url && url.includes(marker)) return sb.storage.from('ad-images').remove([decodeURIComponent(url.split(marker)[1])]);
+        }
+        const adImageList = ad => (ad.images && ad.images.length ? ad.images : [ad.image_url]);
+
+        function setPostModalMode(isEdit) {
+            const h = document.getElementById('postModalTitle'), b = document.getElementById('postSubmitBtn');
+            if (h) h.innerText = t(isEdit ? 'post.title_edit' : 'post.title_new');
+            if (b) b.innerText = t(isEdit ? 'post.btn_edit' : 'post.btn_new');
+        }
+
+        function openPostAdModal() {
+            if (!currentUser) { openAuthModal(); return; }
+            editingAd = null;
+            document.getElementById('postAdForm').reset();
+            resetPhotos();
+            if (currentProfile) {
+                document.getElementById('adWhatsapp').value = currentProfile.phone || '';
+                document.getElementById('adLocation').value = currentProfile.city || '';
+            }
+            setPostModalMode(false);
+            openModal('postAdModal');
+        }
+
+        function openEditAd(id) {
+            const ad = myAdsCache.find(a => a.id === id);
+            if (!ad) return;
+            if (ad.status === 'APPROVED' && !confirm(t('post.confirm_edit'))) return;
+            editingAd = ad;
+            document.getElementById('postAdForm').reset();
+            resetPhotos();
+            document.getElementById('adTitle').value = ad.title;
+            document.getElementById('adCategory').value = ad.category;
+            document.getElementById('adCondition').value = ad.item_condition;
+            document.getElementById('adPrice').value = ad.price;
+            document.getElementById('adLocation').value = ad.location;
+            document.getElementById('adWhatsapp').value = ad.whatsapp;
+            document.getElementById('adDescription').value = ad.description;
+            photos = adImageList(ad).map(u => ({ kind: 'existing', url: u, previewUrl: safeUrl(u) }));
+            renderPhotoManager();
+            setPostModalMode(true);
+            openModal('postAdModal');
+        }
+
+        function openAdPreview() {
+            absorbPendingUrl();
+            const form = document.getElementById('postAdForm');
+            if (!form.reportValidity()) return;
+            if (!photos.length) return notifyErr(t('photo.required_preview'));
+
+            const v = id => document.getElementById(id).value.trim();
+            const imgs = photos.map(p => p.previewUrl);
+            const title = esc(v('adTitle')), cond = esc(lbl('cond.', document.getElementById('adCondition').value)), cat = esc(lbl('cat.', document.getElementById('adCategory').value));
+            const price = money(parseFloat(v('adPrice')) || 0), loc = esc(v('adLocation')), desc = esc(v('adDescription'));
+            const seller = esc(currentUser ? currentUser.name : t('seller'));
+
+            document.getElementById('adPreviewBody').innerHTML = `
+                <div>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">${esc(t('preview.h1'))}</p>
+                    <div class="max-w-xs bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                        <div class="relative h-52 bg-slate-100">
+                            <img src="${esc(imgs[0])}" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">${cond}</span>
+                            ${imgs.length > 1 ? `<span class="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded-full"><i class="fa-regular fa-images mr-1"></i>${imgs.length}</span>` : ''}
+                            <span class="absolute bottom-3 right-3 bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded-xl">Rs. ${price}</span>
+                        </div>
+                        <div class="p-4 space-y-2">
+                            <span class="text-[10px] font-bold text-brand-600 uppercase tracking-wider block">${cat}</span>
+                            <h3 class="font-bold text-slate-800 text-sm line-clamp-2">${title}</h3>
+                            <div class="text-xs text-slate-400 border-t border-slate-100 pt-2"><i class="fa-solid fa-location-dot text-red-500 text-[11px]"></i> ${loc}</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">${esc(t('preview.h2'))}</p>
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
+                        <div class="flex gap-3 p-3">
+                            <div class="flex flex-col gap-2 w-14 flex-shrink-0">${imgs.map((u, k) => `<img src="${esc(u)}" class="w-14 h-14 rounded-lg object-cover border-2 ${k === 0 ? 'border-slate-900' : 'border-transparent'}">`).join('')}</div>
+                            <img src="${esc(imgs[0])}" class="flex-1 min-w-0 aspect-square object-contain bg-slate-100 rounded-xl">
+                        </div>
+                        <div class="p-4 space-y-3 border-t border-slate-100">
+                            <h2 class="text-lg font-bold text-slate-900">${title}</h2>
+                            <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot text-red-500"></i> ${loc} • ${cond} • ${cat}</p>
+                            <p class="text-2xl font-extrabold text-slate-900">Rs. ${price}</p>
+                            <div class="bg-slate-50 rounded-xl p-3 text-sm font-bold text-slate-800"><i class="fa-solid fa-user text-brand-600 mr-1"></i> ${seller}</div>
+                            <p class="text-sm text-slate-700 whitespace-pre-line border-t border-slate-100 pt-3">${desc}</p>
+                        </div>
+                    </div>
+                </div>`;
+            openModal('adPreviewModal');
+        }
+
+        function submitFromPreview() {
+            closeModal('adPreviewModal');
+            document.getElementById('postAdForm').requestSubmit(document.getElementById('postSubmitBtn'));
+        }
+
+        async function handlePostAdSubmit(e) {
+            e.preventDefault();
+            if (!currentUser) { closeModal('postAdModal'); openAuthModal(); return; }
+            absorbPendingUrl();
+            if (!photos.length) { notifyErr(t('photo.required')); return; }
+
+            await busy(e.submitter || document.getElementById('postSubmitBtn'), async () => {
+                try {
+                    const urls = [];
+                    for (let i = 0; i < photos.length; i++) {
+                        const p = photos[i];
+                        if (p.kind === 'new') {
+                            const path = `${currentUser.id}/${Date.now()}_${i}.jpg`;
+                            const up = await sb.storage.from('ad-images').upload(path, p.blob, { contentType: 'image/jpeg' });
+                            if (up.error) throw up.error;
+                            urls.push(sb.storage.from('ad-images').getPublicUrl(path).data.publicUrl);
+                        } else urls.push(p.url);
+                    }
+
+                    const fields = {
+                        title: document.getElementById('adTitle').value.trim(),
+                        category: document.getElementById('adCategory').value,
+                        item_condition: document.getElementById('adCondition').value,
+                        price: parseFloat(document.getElementById('adPrice').value),
+                        location: document.getElementById('adLocation').value.trim(),
+                        whatsapp: document.getElementById('adWhatsapp').value.trim(),
+                        seller_name: (currentProfile && currentProfile.name) || currentUser.name,
+                        image_url: urls[0],
+                        images: urls,
+                        description: document.getElementById('adDescription').value.trim()
+                    };
+
+                    if (editingAd) {
+                        const { data, error } = await sb.from('ads').update(fields).eq('id', editingAd.id).select('id');
+                        if (error) throw error;
+                        if (!data || !data.length) throw new Error('row-level security: update blocked');
+                        for (const old of adImageList(editingAd)) if (!urls.includes(old)) removeStorageImage(old);
+                        closeModal('postAdModal');
+                        editingAd = null; resetPhotos();
+                        await loadAds();
+                        notify(t('post.saved_edit'));
+                        showProfile('ads');
+                    } else {
+                        const { error } = await sb.from('ads').insert({ user_id: currentUser.id, ...fields });
+                        if (error) throw error;
+                        document.getElementById('postAdForm').reset();
+                        resetPhotos();
+                        closeModal('postAdModal');
+                        notify(t('post.saved_new'));
+                        if (currentView === 'profile') loadMyAds();
+                    }
+                } catch (err) {
+                    notifyErr(t('post.save_fail', { err: friendlyError(err) }));
+                }
+            });
+        }
+
+        // =====================================================================
+        //  Auth (popup නැත – form තුළම පණිවිඩ)
+        // =====================================================================
+        function openAuthModal() { clearFormMsgs(); openModal('authModal'); }
+
+        function switchAuthTab(tab) {
+            clearFormMsgs();
+            const on = 'flex-1 py-2 font-bold text-sm text-brand-600 border-b-2 border-brand-600 transition-all';
+            const off = 'flex-1 py-2 font-bold text-sm text-slate-400 border-b-2 border-transparent transition-all';
+            document.getElementById('tabLogin').className = tab === 'login' ? on : off;
+            document.getElementById('tabRegister').className = tab === 'login' ? off : on;
+            document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('registerForm').classList.toggle('hidden', tab === 'login');
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            if (!CONFIGURED) return formMsg('loginMsg', t('err.config'));
+            formMsg('loginMsg', '');
+            await busy(e.submitter, async () => {
+                const { error } = await sb.auth.signInWithPassword({
+                    email: document.getElementById('loginEmail').value.trim(),
+                    password: document.getElementById('loginPassword').value
+                });
+                if (error) {
+                    document.getElementById('resendBox').classList.toggle('hidden', !/not confirmed/i.test(error.message));
+                    return formMsg('loginMsg', friendlyError(error));
+                }
+                document.getElementById('loginForm').reset();
+                closeModal('authModal');
+            });
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            if (!CONFIGURED) return formMsg('registerMsg', t('err.config'));
+            formMsg('registerMsg', '');
+            await busy(e.submitter, async () => {
+                const name = document.getElementById('regName').value.trim();
+                const { data, error } = await sb.auth.signUp({
+                    email: document.getElementById('regEmail').value.trim(),
+                    password: document.getElementById('regPassword').value,
+                    options: { data: { name }, emailRedirectTo: SITE_URL }
+                });
+                if (error) return formMsg('registerMsg', friendlyError(error));
+                if (data.user && data.user.identities && data.user.identities.length === 0)
+                    return formMsg('registerMsg', t('err.exists'));
+                const regEmailVal = document.getElementById('regEmail').value.trim();
+                document.getElementById('registerForm').reset();
+                if (data.session) { closeModal('authModal'); return; }
+                switchAuthTab('login');
+                document.getElementById('loginEmail').value = regEmailVal;
+                document.getElementById('resendBox').classList.remove('hidden');
+                formMsg('loginMsg', t('auth.registered'), true);
+            });
+        }
+
+        function showForgot() { clearFormMsgs(); closeModal('authModal'); openModal('forgotModal'); }
+
+        async function handleForgot(e) {
+            e.preventDefault();
+            if (!CONFIGURED) return formMsg('forgotMsg', t('err.config'));
+            formMsg('forgotMsg', '');
+            await busy(e.submitter, async () => {
+                const { error } = await sb.auth.resetPasswordForEmail(
+                    document.getElementById('forgotEmail').value.trim(), { redirectTo: SITE_URL });
+                if (error) return formMsg('forgotMsg', friendlyError(error));
+                formMsg('forgotMsg', t('auth.forgot_sent'), true);
+            });
+        }
+
+        async function handleResetPassword(e) {
+            e.preventDefault();
+            const p1 = document.getElementById('newPassword').value;
+            const p2 = document.getElementById('newPassword2').value;
+            if (p1 !== p2) return formMsg('resetMsg', t('auth.pw_mismatch'));
+            await busy(e.submitter, async () => {
+                const { error } = await sb.auth.updateUser({ password: p1 });
+                if (error) return formMsg('resetMsg', friendlyError(error));
+                document.getElementById('resetForm').reset();
+                formMsg('resetMsg', t('auth.pw_changed'), true);
+                history.replaceState(null, '', SITE_URL);
+                setTimeout(() => closeModal('resetModal'), 1500);
+            });
+        }
+
+        function handleAuthRedirectError() {
+            const p = new URLSearchParams(INITIAL_HASH.replace(/^#/, ''));
+            if (!p.get('error')) return;
+            try { history.replaceState(null, '', SITE_URL); } catch (e) {}
+            openAuthModal(); switchAuthTab('login');
+            formMsg('loginMsg', t('auth.hash_error'), false);
+            document.getElementById('resendBox').classList.remove('hidden');
+        }
+
+        async function resendConfirmation() {
+            const email = document.getElementById('loginEmail').value.trim();
+            if (!email) return formMsg('loginMsg', t('auth.need_email'));
+            const { error } = await sb.auth.resend({ type: 'signup', email, options: { emailRedirectTo: SITE_URL } });
+            if (error) return formMsg('loginMsg', friendlyError(error));
+            formMsg('loginMsg', t('auth.resent'), true);
+        }
+
+        async function handleLogout() {
+            await sb.auth.signOut();
+            showHome();
+        }
+
+        function updateAuthUI() {
+            const container = document.getElementById('authButtons');
+            if (!container) return;
+            if (currentUser) {
+                container.innerHTML = `
+                    <button onclick="showProfile()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold px-3 py-2 rounded-xl border border-slate-200 transition-all flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 text-white text-[11px] font-bold flex items-center justify-center">${esc((currentUser.name || '?').charAt(0).toUpperCase())}</span>
+                        <span class="max-w-[80px] truncate">${esc(currentUser.name)}</span>
+                    </button>`;
+            } else {
+                container.innerHTML = `
+                    <button onclick="openAuthModal()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-2 rounded-xl transition-all border border-slate-200">
+                        ${esc(t('Login'))}
+                    </button>`;
+            }
+        }
+
+        // =====================================================================
+        //  Profile page
+        // =====================================================================
+        async function loadProfile() {
+            if (!currentUser) { currentProfile = null; return; }
+            const { data } = await sb.from('profiles').select('name,phone,city,bio').eq('id', currentUser.id).maybeSingle();
+            currentProfile = data || null;
+            if (data && data.name && currentUser) {
+                currentUser.name = data.name;
+                updateAuthUI();
+                if (currentView === 'profile') renderProfileHeader();
+            }
+        }
+
+        function renderProfileHeader() {
+            if (!currentUser) return;
+            const p = currentProfile || {};
+            const name = p.name || currentUser.name || '';
+            document.getElementById('profAvatar').innerText = (name || '?').charAt(0).toUpperCase();
+            document.getElementById('profHeadName').innerText = name;
+            document.getElementById('profHeadEmail').innerText = currentUser.email;
+            document.getElementById('profHeadCity').innerText = [p.city, p.phone].filter(Boolean).join(' • ');
+        }
+
+        function setProfileTab(tab) {
+            ['ads', 'details', 'password'].forEach(k => {
+                document.getElementById('ptab-' + k).classList.toggle('hidden', k !== tab);
+                const b = document.getElementById('ptabBtn-' + k);
+                const on = k === tab;
+                b.className = 'ptab-btn flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ' +
+                    (on ? 'bg-brand-600 text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50');
+            });
+            if (tab === 'details') fillProfileForm();
+            if (tab === 'password') { document.getElementById('passForm').reset(); formMsg('passMsg', ''); }
+        }
+
+        async function fillProfileForm() {
+            if (!currentProfile) await loadProfile();
+            const p = currentProfile || {};
+            document.getElementById('profEmail').value = currentUser.email;
+            document.getElementById('profName').value = p.name || currentUser.name || '';
+            document.getElementById('profPhone').value = p.phone || '';
+            document.getElementById('profCity').value = p.city || '';
+            document.getElementById('profBio').value = p.bio || '';
+            formMsg('profileMsg', '');
+        }
+
+        async function handleProfileSave(e) {
+            e.preventDefault();
+            formMsg('profileMsg', '');
+            const name = document.getElementById('profName').value.trim();
+            const phone = document.getElementById('profPhone').value.trim() || null;
+            const city = document.getElementById('profCity').value.trim() || null;
+            const bio = document.getElementById('profBio').value.trim() || null;
+            if (name.length < 2) return formMsg('profileMsg', t('prof.name_short'));
+            if (phone && (phone.length < 9 || phone.length > 20)) return formMsg('profileMsg', t('prof.phone_invalid'));
+
+            await busy(e.submitter, async () => {
+                const { data, error } = await sb.from('profiles').update({ name, phone, city, bio }).eq('id', currentUser.id).select('id');
+                if (error) return formMsg('profileMsg', friendlyError(error));
+                if (!data || !data.length) return formMsg('profileMsg', t('prof.save_fail'));
+                currentProfile = { name, phone, city, bio };
+                currentUser.name = name;
+                updateAuthUI();
+                renderProfileHeader();
+                await sb.auth.updateUser({ data: { name } });
+                // ඇඩ් වල පෙන්වන විකුණුම්කරුගේ නමත් යාවත්කාලීන කිරීම (අනුමැතිය නොවෙනස් වේ)
+                await sb.from('ads').update({ seller_name: name }).eq('user_id', currentUser.id);
+                formMsg('profileMsg', t('prof.saved'), true);
+                loadAds();
+            });
+        }
+
+        async function handlePasswordChange(e) {
+            e.preventDefault();
+            formMsg('passMsg', '');
+            const p1 = document.getElementById('profNewPass').value;
+            const p2 = document.getElementById('profNewPass2').value;
+            if (p1 !== p2) return formMsg('passMsg', t('auth.pw_mismatch'));
+            await busy(e.submitter, async () => {
+                const { error } = await sb.auth.updateUser({ password: p1 });
+                if (error) return formMsg('passMsg', friendlyError(error));
+                document.getElementById('passForm').reset();
+                formMsg('passMsg', t('auth.pw_changed'), true);
+            });
+        }
+
+        // ---------- My Ads (profile page) ----------
+        const STATUS_CLS = { APPROVED: 'bg-emerald-100 text-emerald-700', PENDING: 'bg-amber-100 text-amber-700', REJECTED: 'bg-red-100 text-red-700' };
+        const statusBadge = s => STATUS_CLS[s] ? `<span class="${STATUS_CLS[s]} font-bold px-2.5 py-1 rounded-full text-[10px] uppercase">${esc(t('status.' + s))}</span>` : '';
+
+        async function loadMyAds() {
+            if (!currentUser) return;
+            const list = document.getElementById('myAdsList');
+            list.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">${esc(t('please_wait'))}</p>`;
+            const { data, error } = await sb.from('ads').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+            if (error) { list.innerHTML = `<p class="text-xs text-red-500 text-center py-8">${esc(t('data_load_error'))}</p>`; return; }
+            myAdsCache = data || [];
+            renderMyAds();
+        }
+
+        function renderMyAds() {
+            const count = s => myAdsCache.filter(a => a.status === s).length;
+            document.getElementById('statTotal').innerText = myAdsCache.length;
+            document.getElementById('statApproved').innerText = count('APPROVED');
+            document.getElementById('statPending').innerText = count('PENDING');
+            document.getElementById('statRejected').innerText = count('REJECTED');
+
+            const list = document.getElementById('myAdsList');
+            if (!myAdsCache.length) {
+                list.innerHTML = `<div class="bg-white border border-dashed border-slate-300 rounded-2xl p-10 text-center text-xs text-slate-400">${esc(t('myads.empty'))}</div>`;
+                return;
+            }
+            list.innerHTML = myAdsCache.map(item => `
+                <div class="bg-white border border-slate-200 rounded-2xl p-3 sm:p-4 flex gap-3 sm:gap-4 shadow-sm">
+                    <img src="${esc(safeUrl(item.image_url))}" alt="" class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover bg-slate-100 flex-shrink-0" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
+                    <div class="flex-1 min-w-0 text-xs space-y-1">
+                        <div class="flex items-start justify-between gap-2">
+                            <h4 class="font-bold text-sm text-slate-900 line-clamp-2">${esc(item.title)}</h4>
+                            ${statusBadge(item.status)}
+                        </div>
+                        <p class="text-emerald-600 font-bold">Rs. ${money(item.price)} <span class="text-slate-400 font-normal">• ${esc(item.location)} • ${esc(fmtDate(item.created_at))}</span></p>
+                        ${item.status === 'REJECTED' ? `<p class="text-red-600">${esc(t('myads.rejected_note'))}</p>` : ''}
+                        ${item.status === 'PENDING' ? `<p class="text-amber-600">${esc(t('myads.pending_note'))}</p>` : ''}
+                        <div class="flex flex-wrap gap-2 pt-1.5">
+                            ${item.status === 'APPROVED' ? `<button onclick="openItemDetailModal('${esc(item.id)}')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold"><i class="fa-solid fa-eye mr-1"></i>${esc(t('myads.view'))}</button>` : ''}
+                            <button onclick="openEditAd('${esc(item.id)}')" class="px-3 py-1.5 rounded-lg bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold"><i class="fa-solid fa-pen-to-square mr-1"></i>${esc(t('myads.edit'))}</button>
+                            <button onclick="deleteMyAd('${esc(item.id)}')" class="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-semibold"><i class="fa-solid fa-trash-can mr-1"></i>${esc(t('myads.delete'))}</button>
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+
+        async function deleteMyAd(id) {
+            const ad = myAdsCache.find(a => a.id === id);
+            if (!ad || !confirm(t('myads.confirm_delete'))) return;
+            const { error } = await sb.from('ads').delete().eq('id', id);
+            if (error) return notifyErr(friendlyError(error));
+            for (const u of adImageList(ad)) await removeStorageImage(u);
+            notify(t('myads.deleted'));
+            await loadMyAds();
+            await loadAds();
+        }
+
+        // ---------- ආරම්භක පරිවර්තනය (පෙන්වීමට පෙර) ----------
+        applyLanguage();
+        document.documentElement.classList.remove('i18n-pending');
+    </script>
+
+</body>
+</html>
