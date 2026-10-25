@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Francy China Item Online Shop</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Custom CSS Link -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center font-bold text-white shadow-lg text-xl" id="logoText">F</div>
+        <div>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-amber-400 via-rose-400 to-amber-200 bg-clip-text text-transparent" id="brandTitle">Francy China Shop</h1>
+          <p class="text-xs text-slate-400">Imported Quality Products</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <!-- Search Bar -->
+        <div class="relative hidden md:block w-64">
+          <input type="text" id="searchInput" oninput="filterProducts()" placeholder="භාණ්ඩ හෝ Code එක සොයන්න..." class="w-full bg-slate-800 text-sm text-slate-200 pl-9 pr-4 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-amber-500 transition-all">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+        </div>
+
+        <!-- Admin Login Button -->
+        <button onclick="openAdminAuthModal()" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold px-4 py-2 rounded-xl border border-slate-700 transition">
+          <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+          <span>Admin Page</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="max-w-7xl mx-auto px-4 mt-6">
+    <div class="bg-gradient-to-r from-slate-800 via-purple-900 to-slate-800 border border-slate-700 rounded-3xl p-8 text-center relative overflow-hidden shadow-2xl">
+      <div class="relative z-10 max-w-2xl mx-auto">
+        <span class="bg-amber-500/20 text-amber-300 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/30 mb-3 inline-block">Direct Import from China</span>
+        <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">ඔබට අවශ්‍ය හොඳම China items දැන් එකම තැනකින්!</h2>
+        <p class="text-slate-300 text-sm md:text-base mb-6">Clothes, Beauty Creams, Electronics සහ තවත් බොහෝ දේ පහසුවෙන්ම WhatsApp හරහා Order කරන්න.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Search Section -->
+  <section class="max-w-7xl mx-auto px-4 mt-8 w-full">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-800 pb-4">
+      <!-- Categories -->
+      <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0" id="categoryContainer">
+        <button onclick="filterCategory('All')" class="category-btn active px-4 py-2 rounded-xl text-sm font-medium border border-slate-700 bg-slate-800 text-slate-300 hover:border-amber-500 whitespace-nowrap transition">සියල්ල (All)</button>
+        <button onclick="filterCategory('Clothes')" class="category-btn px-4 py-2 rounded-xl text-sm font-medium border border-slate-700 bg-slate-800 text-slate-300 hover:border-amber-500 whitespace-nowrap transition">Clothes</button>
+        <button onclick="filterCategory('Creams')" class="category-btn px-4 py-2 rounded-xl text-sm font-medium border border-slate-700 bg-slate-800 text-slate-300 hover:border-amber-500 whitespace-nowrap transition">Creams</button>
+        <button onclick="filterCategory('Items')" class="category-btn px-4 py-2 rounded-xl text-sm font-medium border border-slate-700 bg-slate-800 text-slate-300 hover:border-amber-500 whitespace-nowrap transition">Imported Items</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <main class="max-w-7xl mx-auto px-4 mt-6 mb-16 w-full">
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamic Products Inserted via JS -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <p>© 2026 Francy China Item Online Shop. All Rights Reserved.</p>
+  </footer>
+
+  <!-- WhatsApp Buy Modal -->
+  <div id="buyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-md w-full p-6 relative shadow-2xl">
+      <button onclick="closeBuyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+      
+      <div class="mb-4 flex items-center gap-3 border-b border-slate-700 pb-3">
+        <div class="p-3 bg-green-500/20 text-green-400 rounded-2xl"><i data-lucide="shopping-bag" class="w-6 h-6"></i></div>
+        <div>
+          <h3 class="text-lg font-bold text-white">WhatsApp Order Form</h3>
+          <p class="text-xs text-slate-400">ඔබගේ විස්තර ඇතුලත් කර Direct WhatsApp කරන්න</p>
+        </div>
+      </div>
+
+      <!-- Selected Item Display -->
+      <div id="modalItemDetails" class="bg-slate-900/60 p-3 rounded-2xl border border-slate-700 mb-4 flex gap-3 items-center">
+        <!-- Dynamic content -->
+      </div>
+
+      <form id="orderForm" onsubmit="sendWhatsAppOrder(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">ඔබගේ නම (Your Name) *</label>
+          <input type="text" id="buyerName" required placeholder="උදා: කසුන් පෙරේරා" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">දුරකථන අංකය (Phone Number) *</label>
+          <input type="tel" id="buyerPhone" required placeholder="0771234567" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">ලිපිනය (Delivery Address) *</label>
+          <textarea id="buyerAddress" required rows="2" placeholder="භාණ්ඩ ලැබිය යුතු ලිපිනය" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-green-500"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">ප්‍රමාණය (Quantity)</label>
+          <input type="number" id="buyerQty" value="1" min="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-green-500">
+        </div>
+
+        <button type="submit" class="w-full mt-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-green-900/40 transition">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span>WhatsApp හරහා Order කරන්න</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Password Modal -->
+  <div id="adminAuthModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-xs w-full p-6 relative shadow-2xl text-center">
+      <button onclick="closeAdminAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="lock" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-lg font-bold text-white mb-1">Admin Password</h3>
+      <p class="text-xs text-slate-400 mb-4">ඇඩ්මින් පේජ් එකට ඇතුළු වීමට PIN එක ගහන්න (Default: 1289)</p>
+      <input type="password" id="adminPinInput" placeholder="PIN අංකය" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-center text-lg tracking-widest text-slate-200 focus:outline-none focus:border-amber-500 mb-4">
+      <button onclick="verifyAdminPin()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2 rounded-xl transition">Login</button>
+    </div>
+  </div>
+
+  <!-- Admin Panel Drawer/Modal -->
+  <div id="adminPanel" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden z-50 overflow-y-auto p-4 md:p-8">
+    <div class="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-amber-400 flex items-center gap-2"><i data-lucide="settings"></i> Admin Control Center</h2>
+          <p class="text-xs text-slate-400">අලුත් භාණ්ඩ එකතු කරන්න, සංස්කරණය කරන්න හෝ ඉවත් කරන්න</p>
+        </div>
+        <button onclick="closeAdminPanel()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-xl"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+
+      <!-- Add New Product Form -->
+      <form id="addProductForm" onsubmit="handleAddNewProduct(event)" class="bg-slate-800/60 border border-slate-700 rounded-2xl p-4 md:p-6 mb-8 space-y-4">
+        <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><i data-lucide="plus-circle" class="w-5 h-5 text-amber-400"></i> අලුත් භාණ්ඩයක් ඇතුලත් කරන්න</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-slate-300 mb-1">භාණ්ඩයේ නම (Product Title)</label>
+            <input type="text" id="newTitle" required placeholder="උදා: Facial Whitening Cream" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 mb-1">Product Code (Item Code)</label>
+            <input type="text" id="newCode" required placeholder="උදා: #FC-105" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 mb-1">මිල (Price - LKR)</label>
+            <input type="number" id="newPrice" required placeholder="2500" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 mb-1">Category (වර්ගය)</label>
+            <select id="newCategory" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+              <option value="Clothes">Clothes</option>
+              <option value="Creams">Creams</option>
+              <option value="Items">Imported Items</option>
+            </select>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs text-slate-300 mb-1">Image Link (URL)</label>
+            <input type="url" id="newImage" required placeholder="https://images.unsplash.com/photo-..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs text-slate-300 mb-1">විස්තරය (Description)</label>
+            <textarea id="newDesc" rows="2" placeholder="භාණ්ඩය පිළිබඳ කෙටි විස්තරයක්..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg">භාණ්ඩය Shop එකට එකතු කරන්න</button>
+      </form>
+
+      <!-- Manage Current Products -->
+      <h3 class="text-lg font-bold text-white mb-4">දැනට තියෙන භාණ්ඩ (Manage Products)</h3>
+      <div id="adminProductList" class="space-y-3">
+        <!-- Admin products list via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom JS Script Link -->
+  <script src="script.js"></script>
+</body>
+</html>
